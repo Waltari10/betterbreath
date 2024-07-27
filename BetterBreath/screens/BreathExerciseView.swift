@@ -6,14 +6,22 @@
 //
 
 import SwiftUI
+import AVFoundation
 
 struct BreathExerciseView: View {
+    
+    @State private var audioPlayer: AVAudioPlayer?
+    @State private var isActive = true
     
     var breathExercise: BreathExercise
     
     @State private var scale: CGFloat = 0.0 // Start small
     
     private func animateCircle() {
+        if !isActive { return }
+        
+        playChime()
+        
         withAnimation(.easeInOut(duration: breathExercise.inBreathDuration)) {
             scale = 1.0
         }
@@ -29,6 +37,22 @@ struct BreathExerciseView: View {
         }
     }
     
+    func playChime() {
+            if !isActive { return }
+        
+            guard let soundURL = Bundle.main.url(forResource: "chime", withExtension: "wav") else {
+                print("Sound file not found.")
+                return
+            }
+
+            do {
+                audioPlayer = try AVAudioPlayer(contentsOf: soundURL)
+                audioPlayer?.play()
+            } catch {
+                print("Could not load file: \(error)")
+            }
+        }
+    
     
     var body: some View {
         Text("Breath \(String(format: "%.1f", breathExercise.inBreathDuration)) - \(String(format: "%.1f", breathExercise.fullBreathHoldDuration)) - \(String(format: "%.1f", breathExercise.outBreathDuration)) - \(String(format: "%.1f", breathExercise.emptyHoldDuration))")
@@ -42,7 +66,7 @@ struct BreathExerciseView: View {
                     .frame(width: min(geometry.size.width * 0.75, 300),
                            height: min(geometry.size.width * 0.75, 300))
                 
-                // Inner circle, smaller, adjust the size as needed
+                // Inner circle
                 Circle()
                     .fill(Color.blue)
                     .scaleEffect(scale) // Use scale to animate size
@@ -51,10 +75,13 @@ struct BreathExerciseView: View {
                     .onAppear {
                         animateCircle()
                     }
+                    .onDisappear {
+                        self.isActive = false
+                    }
             }
-            .frame(maxWidth: .infinity, maxHeight: .infinity) // Centering in GeometryReader
+            .frame(maxWidth: .infinity, maxHeight: .infinity)
         }
-        .edgesIgnoringSafeArea(.all) // Optional, to use the entire screen space if needed
+        .edgesIgnoringSafeArea(.all)
         
         TimerView()
     }
