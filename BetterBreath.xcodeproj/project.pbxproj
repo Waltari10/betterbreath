@@ -13,6 +13,7 @@
 		60EF16E72C552B3600E7D0AF /* BreathExerciseListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 60EF16E62C552B3600E7D0AF /* BreathExerciseListView.swift */; };
 		60EF16E92C552BD400E7D0AF /* BreathExerciseView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 60EF16E82C552BD400E7D0AF /* BreathExerciseView.swift */; };
 		60EF16F02C556B5600E7D0AF /* Timer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 60EF16EF2C556B5600E7D0AF /* Timer.swift */; };
+		60EF16F32C556E1900E7D0AF /* chime.wav in Resources */ = {isa = PBXBuildFile; fileRef = 60EF16F22C556E1900E7D0AF /* chime.wav */; };
 		60FC62D42C52B67100550D32 /* BetterBreathApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 60FC62D32C52B67100550D32 /* BetterBreathApp.swift */; };
 		60FC62DA2C52B67200550D32 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 60FC62D92C52B67200550D32 /* Assets.xcassets */; };
 		60FC62DE2C52B67200550D32 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 60FC62DD2C52B67200550D32 /* Preview Assets.xcassets */; };
@@ -46,6 +47,7 @@
 		60EF16E82C552BD400E7D0AF /* BreathExerciseView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BreathExerciseView.swift; sourceTree = "<group>"; };
 		60EF16ED2C55666400E7D0AF /* README.markdown */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = README.markdown; sourceTree = "<group>"; };
 		60EF16EF2C556B5600E7D0AF /* Timer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Timer.swift; sourceTree = "<group>"; };
+		60EF16F22C556E1900E7D0AF /* chime.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = chime.wav; sourceTree = "<group>"; };
 		60FC62D02C52B67100550D32 /* BetterBreath.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = BetterBreath.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		60FC62D32C52B67100550D32 /* BetterBreathApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BetterBreathApp.swift; sourceTree = "<group>"; };
 		60FC62D92C52B67200550D32 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -110,6 +112,14 @@
 			path = components;
 			sourceTree = "<group>";
 		};
+		60EF16F12C556E0D00E7D0AF /* assets */ = {
+			isa = PBXGroup;
+			children = (
+				60EF16F22C556E1900E7D0AF /* chime.wav */,
+			);
+			path = assets;
+			sourceTree = "<group>";
+		};
 		60FC62C72C52B67100550D32 = {
 			isa = PBXGroup;
 			children = (
@@ -134,6 +144,7 @@
 		60FC62D22C52B67100550D32 /* BetterBreath */ = {
 			isa = PBXGroup;
 			children = (
+				60EF16F12C556E0D00E7D0AF /* assets */,
 				60EF16EE2C5567D400E7D0AF /* components */,
 				60EF16EC2C55646600E7D0AF /* screens */,
 				60EF16EB2C55645B00E7D0AF /* models */,
@@ -274,6 +285,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				60EF16F32C556E1900E7D0AF /* chime.wav in Resources */,
 				60FC62DE2C52B67200550D32 /* Preview Assets.xcassets in Resources */,
 				60FC62DA2C52B67200550D32 /* Assets.xcassets in Resources */,
 			);
