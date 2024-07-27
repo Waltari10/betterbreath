@@ -21,7 +21,7 @@ struct BreathExerciseListView: View {
             List {
                 ForEach(breathExercises) { breathExercise in
                     NavigationLink(destination: BreathExerciseView(breathExercise: breathExercise)) {
-                        Text(breathExercise.createdAt, format: Date.FormatStyle(date: .numeric, time: .standard))
+                        Text("Breath \(String(format: "%.1f", breathExercise.inBreathDuration)) - \(String(format: "%.1f", breathExercise.fullBreathHoldDuration)) - \(String(format: "%.1f", breathExercise.outBreathDuration)) - \(String(format: "%.1f", breathExercise.emptyHoldDuration))")
                     }
                 }
                 .onDelete(perform: deleteItems)
