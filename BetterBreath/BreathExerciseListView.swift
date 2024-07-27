@@ -14,15 +14,13 @@ struct BreathExerciseListView: View {
     
     @Environment(\.openWindow) private var openWindow
     @Environment(\.dismiss) private var dismiss
-
+    
     
     var body: some View {
         NavigationSplitView {
             List {
                 ForEach(breathExercises) { breathExercise in
-                    NavigationLink {
-                        Text("breathExercise at \(breathExercise.createdAt, format: Date.FormatStyle(date: .numeric, time: .standard))")
-                    } label: {
+                    NavigationLink(destination: BreathExerciseView(breathExercise: breathExercise)) {
                         Text(breathExercise.createdAt, format: Date.FormatStyle(date: .numeric, time: .standard))
                     }
                 }
@@ -48,11 +46,6 @@ struct BreathExerciseListView: View {
         }
     }
     
-    
-    private func addItem() {
-        
-       
-    }
     
     private func deleteItems(offsets: IndexSet) {
         withAnimation {

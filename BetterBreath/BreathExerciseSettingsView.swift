@@ -10,6 +10,7 @@ import SwiftUI
 struct BreathExerciseSettingsView: View {
     
     @Environment(\.modelContext) private var modelContext
+    @Environment(\.dismiss) var dismiss
 
     
     @State private var inBreathDuration: Double = 5.0
@@ -90,6 +91,7 @@ struct BreathExerciseSettingsView: View {
             .padding()
             Button(action: {
                 saveExercise()
+                dismiss()
             }) {
                 Text("Save")
                     .font(.headline)
