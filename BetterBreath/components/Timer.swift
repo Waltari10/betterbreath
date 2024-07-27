@@ -1,13 +1,19 @@
 import SwiftUI
 
 struct TimerView: View {
-    @State private var timeElapsed = 0.0
+    @Binding var timeElapsed: Double
+    @Binding var isActive: Bool
+    
     let timer = Timer.publish(every: 1, on: .main, in: .common).autoconnect()  // Updates every second for simplicity
 
     var body: some View {
         Text(timeFormatted(timeElapsed))
             .font(.title)
             .onReceive(timer) { _ in
+                if !isActive {
+                    return
+                }
+                
                 timeElapsed += 1  // Increment the counter by 1 second
             }
             .onDisappear() {

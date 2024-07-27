@@ -10,8 +10,13 @@ import SwiftUI
 struct SecondsPickerModalView: View {
     @Binding var selectedDuration: Double
     @Binding var title: String
+    var maxSeconds: Double
+    var stepS: Double
+
     
-    let durationOptions: [Double] = stride(from: 0.0, through: 60.0, by: 0.5).map { $0 }
+    var durationOptions: [Double] {
+         stride(from: 0.0, through: maxSeconds, by: stepS).map { $0 }
+     }
     
     @Environment(\.presentationMode) var presentationMode
     
@@ -47,6 +52,8 @@ struct SecondsPickerModalView: View {
 #Preview {
     SecondsPickerModalView(
         selectedDuration: .constant(5.0),
-        title: .constant("Select In Breath Duration")
+        title: .constant("Select In Breath Duration"),
+        maxSeconds:10.0,
+        stepS: 0.5
     )
 }

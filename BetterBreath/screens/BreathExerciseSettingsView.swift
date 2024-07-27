@@ -9,6 +9,7 @@ struct BreathExerciseSettingsView: View {
     @State private var fullBreathHoldDuration: Double = 0.0
     @State private var outBreathDuration: Double = 5.0
     @State private var emptyHoldDuration: Double = 0.0
+    @State private var exerciseDuration: Double = 60.0
     @State private var pickerTitle: String = ""
     @State private var exerciseName: String = "New exercise"
 
@@ -17,13 +18,15 @@ struct BreathExerciseSettingsView: View {
     @State private var showFullBreathHoldPicker = false
     @State private var showOutBreathPicker = false
     @State private var showEmptyHoldPicker = false
+    @State private var showExerciseDurationPicker = false
 
     var body: some View {
         VStack {
-            durationButton("In Breath Duration", duration: $inBreathDuration, showPicker: $showInBreathPicker)
-            durationButton("Full Breath Hold Duration", duration: $fullBreathHoldDuration, showPicker: $showFullBreathHoldPicker)
-            durationButton("Out Breath Duration", duration: $outBreathDuration, showPicker: $showOutBreathPicker)
-            durationButton("Empty Hold Breath Duration", duration: $emptyHoldDuration, showPicker: $showEmptyHoldPicker)
+            durationButton("In Breath Duration", duration: $inBreathDuration, showPicker: $showInBreathPicker, maxDurationS: 60.0, stepS: 0.5)
+            durationButton("Full Breath Hold Duration", duration: $fullBreathHoldDuration, showPicker: $showFullBreathHoldPicker, maxDurationS : 60.0, stepS: 0.5)
+            durationButton("Out Breath Duration", duration: $outBreathDuration, showPicker: $showOutBreathPicker, maxDurationS : 60.0, stepS: 0.5)
+            durationButton("Empty Hold Breath Duration", duration: $emptyHoldDuration, showPicker: $showEmptyHoldPicker, maxDurationS : 60.0, stepS: 0.5)
+            durationButton("Exercise Duration", duration: $exerciseDuration, showPicker: $showExerciseDurationPicker, maxDurationS : 3600.0, stepS: 30.0)
 
             Button(action: {
                 saveExercise()
@@ -40,7 +43,7 @@ struct BreathExerciseSettingsView: View {
         }
     }
 
-    private func durationButton(_ title: String, duration: Binding<Double>, showPicker: Binding<Bool>) -> some View {
+    private func durationButton(_ title: String, duration: Binding<Double>, showPicker: Binding<Bool>, maxDurationS: Double, stepS: Double) -> some View {
         Button(action: {
             pickerTitle = "Select \(title)"
             showPicker.wrappedValue = true
@@ -56,7 +59,9 @@ struct BreathExerciseSettingsView: View {
         .sheet(isPresented: showPicker) {
             SecondsPickerModalView(
                 selectedDuration: duration,
-                title: $pickerTitle
+                title: $pickerTitle,
+                maxSeconds: maxDurationS,
+                stepS: stepS
             )
         }
         .padding()
@@ -70,6 +75,7 @@ struct BreathExerciseSettingsView: View {
                 fullBreathHoldDuration: fullBreathHoldDuration,
                 outBreathDuration: outBreathDuration,
                 emptyHoldDuration: emptyHoldDuration,
+                exerciseDuration: exerciseDuration,
                 name: exerciseName
             )
             modelContext.insert(newItem)

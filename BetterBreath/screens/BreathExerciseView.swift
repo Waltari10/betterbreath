@@ -12,6 +12,8 @@ struct BreathExerciseView: View {
     
     @State private var audioPlayer: AVAudioPlayer?
     @State private var isActive = true
+    @State private var timeElapsed = 0.0
+    
     
     var breathExercise: BreathExercise
     
@@ -20,7 +22,6 @@ struct BreathExerciseView: View {
     private func animateCircle() {
         if !isActive { return }
         
-        playChime()
         
         withAnimation(.easeInOut(duration: breathExercise.inBreathDuration)) {
             scale = 1.0
@@ -38,20 +39,27 @@ struct BreathExerciseView: View {
     }
     
     func playChime() {
-            if !isActive { return }
+        if !isActive { return }
         
-            guard let soundURL = Bundle.main.url(forResource: "chime", withExtension: "wav") else {
-                print("Sound file not found.")
-                return
-            }
-
-            do {
-                audioPlayer = try AVAudioPlayer(contentsOf: soundURL)
-                audioPlayer?.play()
-            } catch {
-                print("Could not load file: \(error)")
-            }
+        guard let soundURL = Bundle.main.url(forResource: "chime", withExtension: "wav") else {
+            print("Sound file not found.")
+            return
         }
+        
+        do {
+            audioPlayer = try AVAudioPlayer(contentsOf: soundURL)
+            audioPlayer?.play()
+        } catch {
+            print("Could not load file: \(error)")
+        }
+    }
+    
+    func checkTimeAndTriggerFunction(time: Double) {
+        if time >= breathExercise.exerciseDuration {
+            playChime()
+            isActive = false
+        }
+    }
     
     
     var body: some View {
@@ -83,7 +91,10 @@ struct BreathExerciseView: View {
         }
         .edgesIgnoringSafeArea(.all)
         
-        TimerView()
+        TimerView(timeElapsed: $timeElapsed, isActive: $isActive)
+            .onChange(of: timeElapsed) { newValue in
+                checkTimeAndTriggerFunction(time: newValue)
+            }
     }
 }
 
@@ -96,6 +107,7 @@ struct BreathExerciseView: View {
         fullBreathHoldDuration: 0.0,
         outBreathDuration: 0.0,
         emptyHoldDuration: 5.0,
+        exerciseDuration:  60.0,
         name: "Breath exercise"
     ))
     .modelContainer(for: BreathExercise.self, inMemory: true)
