@@ -7,9 +7,11 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		60EC2CE12C52BCF7007EE00E /* BreathExerciseSettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 60EC2CE02C52BCF7007EE00E /* BreathExerciseSettingsView.swift */; };
+		60EC2CE32C52C0E7007EE00E /* SecondsPickerModalView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 60EC2CE22C52C0E7007EE00E /* SecondsPickerModalView.swift */; };
+		60EF16AC2C551BB700E7D0AF /* BreathExercise.swift in Sources */ = {isa = PBXBuildFile; fileRef = 60EF16AB2C551BB700E7D0AF /* BreathExercise.swift */; };
+		60EF16E72C552B3600E7D0AF /* BreathExerciseListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 60EF16E62C552B3600E7D0AF /* BreathExerciseListView.swift */; };
 		60FC62D42C52B67100550D32 /* BetterBreathApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 60FC62D32C52B67100550D32 /* BetterBreathApp.swift */; };
-		60FC62D62C52B67100550D32 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 60FC62D52C52B67100550D32 /* ContentView.swift */; };
-		60FC62D82C52B67100550D32 /* Item.swift in Sources */ = {isa = PBXBuildFile; fileRef = 60FC62D72C52B67100550D32 /* Item.swift */; };
 		60FC62DA2C52B67200550D32 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 60FC62D92C52B67200550D32 /* Assets.xcassets */; };
 		60FC62DE2C52B67200550D32 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 60FC62DD2C52B67200550D32 /* Preview Assets.xcassets */; };
 		60FC62E82C52B67300550D32 /* BetterBreathTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 60FC62E72C52B67300550D32 /* BetterBreathTests.swift */; };
@@ -35,10 +37,12 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		60EC2CE02C52BCF7007EE00E /* BreathExerciseSettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BreathExerciseSettingsView.swift; sourceTree = "<group>"; };
+		60EC2CE22C52C0E7007EE00E /* SecondsPickerModalView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SecondsPickerModalView.swift; sourceTree = "<group>"; };
+		60EF16AB2C551BB700E7D0AF /* BreathExercise.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BreathExercise.swift; sourceTree = "<group>"; };
+		60EF16E62C552B3600E7D0AF /* BreathExerciseListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BreathExerciseListView.swift; sourceTree = "<group>"; };
 		60FC62D02C52B67100550D32 /* BetterBreath.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = BetterBreath.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		60FC62D32C52B67100550D32 /* BetterBreathApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BetterBreathApp.swift; sourceTree = "<group>"; };
-		60FC62D52C52B67100550D32 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
-		60FC62D72C52B67100550D32 /* Item.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Item.swift; sourceTree = "<group>"; };
 		60FC62D92C52B67200550D32 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		60FC62DB2C52B67200550D32 /* BetterBreath.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = BetterBreath.entitlements; sourceTree = "<group>"; };
 		60FC62DD2C52B67200550D32 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
@@ -98,8 +102,10 @@
 			isa = PBXGroup;
 			children = (
 				60FC62D32C52B67100550D32 /* BetterBreathApp.swift */,
-				60FC62D52C52B67100550D32 /* ContentView.swift */,
-				60FC62D72C52B67100550D32 /* Item.swift */,
+				60EF16E62C552B3600E7D0AF /* BreathExerciseListView.swift */,
+				60EC2CE02C52BCF7007EE00E /* BreathExerciseSettingsView.swift */,
+				60EF16AB2C551BB700E7D0AF /* BreathExercise.swift */,
+				60EC2CE22C52C0E7007EE00E /* SecondsPickerModalView.swift */,
 				60FC62D92C52B67200550D32 /* Assets.xcassets */,
 				60FC62DB2C52B67200550D32 /* BetterBreath.entitlements */,
 				60FC62DC2C52B67200550D32 /* Preview Content */,
@@ -262,9 +268,11 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				60FC62D62C52B67100550D32 /* ContentView.swift in Sources */,
-				60FC62D82C52B67100550D32 /* Item.swift in Sources */,
+				60EC2CE32C52C0E7007EE00E /* SecondsPickerModalView.swift in Sources */,
+				60EC2CE12C52BCF7007EE00E /* BreathExerciseSettingsView.swift in Sources */,
+				60EF16E72C552B3600E7D0AF /* BreathExerciseListView.swift in Sources */,
 				60FC62D42C52B67100550D32 /* BetterBreathApp.swift in Sources */,
+				60EF16AC2C551BB700E7D0AF /* BreathExercise.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
