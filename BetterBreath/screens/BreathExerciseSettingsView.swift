@@ -22,11 +22,11 @@ struct BreathExerciseSettingsView: View {
 
     var body: some View {
         VStack {
-            durationButton("In Breath Duration", duration: $inBreathDuration, showPicker: $showInBreathPicker, maxDurationS: 60.0, stepS: 0.5)
-            durationButton("Full Breath Hold Duration", duration: $fullBreathHoldDuration, showPicker: $showFullBreathHoldPicker, maxDurationS : 60.0, stepS: 0.5)
-            durationButton("Out Breath Duration", duration: $outBreathDuration, showPicker: $showOutBreathPicker, maxDurationS : 60.0, stepS: 0.5)
-            durationButton("Empty Hold Breath Duration", duration: $emptyHoldDuration, showPicker: $showEmptyHoldPicker, maxDurationS : 60.0, stepS: 0.5)
-            durationButton("Exercise Duration", duration: $exerciseDuration, showPicker: $showExerciseDurationPicker, maxDurationS : 3600.0, stepS: 30.0)
+            durationButton("In Breath Duration", duration: $inBreathDuration, showPicker: $showInBreathPicker)
+            durationButton("Full Breath Hold Duration", duration: $fullBreathHoldDuration, showPicker: $showFullBreathHoldPicker)
+            durationButton("Out Breath Duration", duration: $outBreathDuration, showPicker: $showOutBreathPicker)
+            durationButton("Empty Hold Breath Duration", duration: $emptyHoldDuration, showPicker: $showEmptyHoldPicker)
+            durationButton("Exercise Duration", duration: $exerciseDuration, showPicker: $showExerciseDurationPicker)
 
             Button(action: {
                 saveExercise()
@@ -36,14 +36,14 @@ struct BreathExerciseSettingsView: View {
                     .font(.headline)
                     .padding()
                     .frame(maxWidth: .infinity)
-                    .background(Color.blue)
+                    .background(Color.green)
                     .foregroundColor(.white)
                     .cornerRadius(10)
             }.padding()
         }
     }
 
-    private func durationButton(_ title: String, duration: Binding<Double>, showPicker: Binding<Bool>, maxDurationS: Double, stepS: Double) -> some View {
+    private func durationButton(_ title: String, duration: Binding<Double>, showPicker: Binding<Bool>) -> some View {
         Button(action: {
             pickerTitle = "Select \(title)"
             showPicker.wrappedValue = true
@@ -57,11 +57,9 @@ struct BreathExerciseSettingsView: View {
                 .cornerRadius(10)
         }
         .sheet(isPresented: showPicker) {
-            SecondsPickerModalView(
-                selectedDuration: duration,
-                title: $pickerTitle,
-                maxSeconds: maxDurationS,
-                stepS: stepS
+            TimePickerModalView(
+                selectedTimeInSeconds: duration,
+                title: $pickerTitle
             )
         }
         .padding()

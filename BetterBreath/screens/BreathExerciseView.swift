@@ -63,7 +63,7 @@ struct BreathExerciseView: View {
     
     
     var body: some View {
-        Text("Breath \(String(format: "%.1f", breathExercise.inBreathDuration)) - \(String(format: "%.1f", breathExercise.fullBreathHoldDuration)) - \(String(format: "%.1f", breathExercise.outBreathDuration)) - \(String(format: "%.1f", breathExercise.emptyHoldDuration))")
+        Text("Pattern \(String(format: "%.1f", breathExercise.inBreathDuration)) - \(String(format: "%.1f", breathExercise.fullBreathHoldDuration)) - \(String(format: "%.1f", breathExercise.outBreathDuration)) - \(String(format: "%.1f", breathExercise.emptyHoldDuration))")
         
         GeometryReader { geometry in
             // Using ZStack to overlay circles
@@ -91,10 +91,14 @@ struct BreathExerciseView: View {
         }
         .edgesIgnoringSafeArea(.all)
         
-        TimerView(timeElapsed: $timeElapsed, isActive: $isActive)
-            .onChange(of: timeElapsed) { newValue in
-                checkTimeAndTriggerFunction(time: newValue)
-            }
+        HStack {
+            TimerView(timeElapsed: $timeElapsed, isActive: $isActive)
+                .onChange(of: timeElapsed) { newValue in
+                    checkTimeAndTriggerFunction(time: newValue)
+                }
+            Text("/")
+            TimerView(timeElapsed: .constant(breathExercise.exerciseDuration), isActive: .constant(false))
+        }
     }
 }
 
