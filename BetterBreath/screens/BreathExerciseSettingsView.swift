@@ -1,11 +1,11 @@
 import SwiftUI
 
 enum PickerType: String {
-    case inBreath = "Select In Breath Duration"
-    case fullBreathHold = "Select Full Breath Hold Duration"
-    case outBreath = "Select Out Breath Duration"
-    case emptyHold = "Select Empty Hold Breath Duration"
-    case exerciseDuration = "Select Exercise Duration"
+    case inBreath = "In Breath"
+    case fullBreathHold = "Full Breath Hold"
+    case outBreath = "Out Breath"
+    case emptyHold = "Empty Hold Breath"
+    case exerciseDuration = "Exercise Duration"
     
     var title: String {
         return self.rawValue
