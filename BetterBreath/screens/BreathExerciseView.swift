@@ -26,10 +26,9 @@ struct BreathExerciseView: View {
         withAnimation(.easeInOut(duration: breathExercise.inBreathDuration)) {
             scale = 1.0
         }
-        DispatchQueue.main.asyncAfter(deadline: .now() + breathExercise.inBreathDuration + breathExercise.fullBreathHoldDuration) {
-            withAnimation(.easeInOut(duration: breathExercise.outBreathDuration)) {
-                scale = 0.0
-            }
+        
+        withAnimation(.easeInOut(duration: breathExercise.outBreathDuration).delay(breathExercise.inBreathDuration + breathExercise.fullBreathHoldDuration)) {
+            scale = 0.0
         }
         
         DispatchQueue.main.asyncAfter(deadline: .now() + breathExercise.inBreathDuration + breathExercise.fullBreathHoldDuration + breathExercise.outBreathDuration + breathExercise.emptyHoldDuration) {
