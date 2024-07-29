@@ -19,17 +19,22 @@ struct BreathExerciseListView: View {
     var body: some View {
         NavigationSplitView {
             List {
-                ForEach(breathExercises) { breathExercise in
-                    NavigationLink(destination: BreathExerciseView(breathExercise: breathExercise)) {
-                        VStack(alignment: .leading) {
-                            Text("Breath exercise").bold()
-                            Text("Duration: \(formatSeconds(seconds: breathExercise.exerciseDuration))")
-                            Text("Pattern: \(String(format: "%.1f", breathExercise.inBreathDuration)) - \(String(format: "%.1f", breathExercise.fullBreathHoldDuration)) - \(String(format: "%.1f", breathExercise.outBreathDuration)) - \(String(format: "%.1f", breathExercise.emptyHoldDuration))")
+                if breathExercises.isEmpty {
+                    Text("Add your first breath exercise from the top right plus button")
+                        .foregroundColor(.gray)
+                        .italic()
+                } else {
+                    ForEach(breathExercises) { breathExercise in
+                        NavigationLink(destination: BreathExerciseView(breathExercise: breathExercise)) {
+                            VStack(alignment: .leading) {
+                                Text("Breath exercise").bold()
+                                Text("Duration: \(formatSeconds(seconds: breathExercise.exerciseDuration))")
+                                Text("Pattern: \(String(format: "%.1f", breathExercise.inBreathDuration)) - \(String(format: "%.1f", breathExercise.fullBreathHoldDuration)) - \(String(format: "%.1f", breathExercise.outBreathDuration)) - \(String(format: "%.1f", breathExercise.emptyHoldDuration))")
+                            }
                         }
                     }
-                }
-                .onDelete(perform: deleteItems)
-            }
+                    .onDelete(perform: deleteItems)
+                }}
 #if os(macOS)
             .navigationSplitViewColumnWidth(min: 180, ideal: 200)
 #endif

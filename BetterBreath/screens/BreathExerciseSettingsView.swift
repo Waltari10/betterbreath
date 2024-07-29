@@ -25,7 +25,6 @@ struct BreathExerciseSettingsView: View {
     @State private var pickerTitle: String = ""
     @State private var exerciseName: String = "New exercise"
     
-    // Separate state for each picker presentation
     @State private var showPicker = false
     @State private var pickerTimeInSeconds: Double = 0.0
     
@@ -73,12 +72,16 @@ struct BreathExerciseSettingsView: View {
         }.padding()
     }
     
+    private func onPressSelectDuration(title: String, duration: Binding<Double>) {
+        pickerTimeInSeconds = duration.wrappedValue
+        pickerTitle = "\(title)"
+        showPicker = true
+    }
+    
     private func durationButton(_ title: String, duration: Binding<Double>) -> some View {
         Button(
             action: {
-                pickerTitle = "\(title)"
-                showPicker = true
-                pickerTimeInSeconds = duration.wrappedValue
+                onPressSelectDuration(title: "\(title)", duration: duration)
             }) {
                 HStack {
                     VStack(alignment: .leading) {
