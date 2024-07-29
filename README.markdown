@@ -26,6 +26,9 @@ Good old non-digital meditation bands also offer this tacticle feedback where yo
 - Apple watch support
 - Modifying existing breath exercise
 - Theming
+- More fanfare when finishing meditation
+- Keeping track of total meditation stats
+- Heart rate and HRV tracking during practice
 
 
 
