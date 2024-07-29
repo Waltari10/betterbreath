@@ -36,6 +36,6 @@ Good old non-digital meditation bands also offer this tacticle feedback where yo
 
 ## Demo video
 
-[![Watch the video](https://img.youtube.com/vi/DSWboeVU4yA/maxresdefault.jpg)](https://youtu.be/DSWboeVU4yA)
+[![Watch the video](https://img.youtube.com/vi/YeWKthqwdw8/maxresdefault.jpg)](https://youtu.be/YeWKthqwdw8)
 
 
