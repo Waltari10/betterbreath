@@ -6,7 +6,7 @@
 Because the Apple Watch breathing app is not very flexible. Also the apps that are flexible, don't support watches or breathing by vibration.
 Breathing following the vibration is possible without headphones and without awkwardly looking at the screen. You only need your phone and no accessories.
 
-Goold old non-digital meditation bands also offer this tacticle feedback where you go through each bead feeling them with your fingers. 
+Good old non-digital meditation bands also offer this tacticle feedback where you go through each bead feeling them with your fingers. 
 
 ## Implemented
 
@@ -27,5 +27,12 @@ Goold old non-digital meditation bands also offer this tacticle feedback where y
 - Modifying existing breath exercise
 - Theming
 
+
+
+
+
+## Demo video
+
+[![Watch the video](https://img.youtube.com/vi/DSWboeVU4yA/maxresdefault.jpg)](https://youtu.be/DSWboeVU4yA)
 
 
