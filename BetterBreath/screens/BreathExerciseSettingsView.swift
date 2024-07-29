@@ -91,7 +91,6 @@ struct BreathExerciseSettingsView: View {
                         .foregroundColor(.gray)
                 }
             }
-            .padding()
     }
     
     func saveExercise() {
