@@ -27,11 +27,7 @@ struct BreathExerciseSettingsView: View {
     @State private var showPicker = false
     @State private var pickerTimeInSeconds: Double = 0.0
 
-    
-    
-    
-    
-                        var body: some View {
+    var body: some View {
         List {
             durationButton(PickerType.inBreath.rawValue, duration: $inBreathDuration)
             durationButton(PickerType.fullBreathHold.rawValue, duration: $fullBreathHoldDuration)
