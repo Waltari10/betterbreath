@@ -54,6 +54,7 @@ struct TimePickerModalView: View {
                 }
                 VStack {
                     // Seconds Picker
+                    Text("Sec")
                     Picker("Seconds", selection: $secondsSelection) {
                         ForEach(0 ..< 60, id: \.self) { second in
 
