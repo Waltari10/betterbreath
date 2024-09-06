@@ -6,17 +6,16 @@ enum PickerType: String {
     case outBreath = "Out Breath"
     case emptyHold = "Empty Hold Breath"
     case exerciseDuration = "Exercise Duration"
-    
+
     var title: String {
-        return self.rawValue
+        return rawValue
     }
 }
 
 struct BreathExerciseSettingsView: View {
-    
     @Environment(\.modelContext) private var modelContext
     @Environment(\.dismiss) var dismiss
-    
+
     @State private var inBreathDuration: Double = 5.0
     @State private var fullBreathHoldDuration: Double = 0.0
     @State private var outBreathDuration: Double = 5.0
@@ -24,10 +23,10 @@ struct BreathExerciseSettingsView: View {
     @State private var exerciseDuration: Double = 60.0
     @State private var pickerTitle: String = ""
     @State private var exerciseName: String = "New exercise"
-    
+
     @State private var showPicker = false
     @State private var pickerTimeInSeconds: Double = 0.0
-    
+
     var body: some View {
         List {
             durationButton(PickerType.inBreath.rawValue, duration: $inBreathDuration)
@@ -57,7 +56,7 @@ struct BreathExerciseSettingsView: View {
                 }
             }
         }
-        
+
         Button(action: {
             saveExercise()
             dismiss()
@@ -71,13 +70,13 @@ struct BreathExerciseSettingsView: View {
                 .cornerRadius(10)
         }.padding()
     }
-    
+
     private func onPressSelectDuration(title: String, duration: Binding<Double>) {
         pickerTimeInSeconds = duration.wrappedValue
         pickerTitle = "\(title)"
         showPicker = true
     }
-    
+
     private func durationButton(_ title: String, duration: Binding<Double>) -> some View {
         Button(
             action: {
@@ -95,7 +94,7 @@ struct BreathExerciseSettingsView: View {
                 }
             }
     }
-    
+
     func saveExercise() {
         withAnimation {
             let newItem = BreathExercise(

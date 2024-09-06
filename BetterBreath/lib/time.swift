@@ -7,7 +7,6 @@
 
 import Foundation
 
-
 func formatSeconds(seconds: Double) -> String {
     let minutes = seconds / 60
     let remainingSeconds = seconds.truncatingRemainder(dividingBy: 60)

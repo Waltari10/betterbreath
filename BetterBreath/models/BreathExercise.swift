@@ -1,5 +1,5 @@
 //
-//  Item.swift
+//  BreathExercise.swift
 //  BetterBreath
 //
 //  Created by Valtteri Laine on 27.7.2024.
@@ -19,15 +19,15 @@ final class BreathExercise {
     // Total duration. How long exercise lasts in total
     var exerciseDuration: Double
     var name: String
-    
+
     init(createdAt: Date,
          inBreathDuration: Double,
          fullBreathHoldDuration: Double,
          outBreathDuration: Double,
          emptyHoldDuration: Double,
          exerciseDuration: Double,
-         name: String
-    ) {
+         name: String)
+    {
         self.createdAt = createdAt
         self.inBreathDuration = inBreathDuration
         self.fullBreathHoldDuration = fullBreathHoldDuration
@@ -35,6 +35,5 @@ final class BreathExercise {
         self.emptyHoldDuration = emptyHoldDuration
         self.exerciseDuration = exerciseDuration
         self.name = name
-        
     }
 }

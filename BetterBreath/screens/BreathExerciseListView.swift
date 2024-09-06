@@ -1,21 +1,20 @@
 //
-//  ContentView.swift
+//  BreathExerciseListView.swift
 //  BetterBreath
 //
 //  Created by Valtteri Laine on 25.7.2024.
 //
 
-import SwiftUI
 import SwiftData
+import SwiftUI
 
 struct BreathExerciseListView: View {
     @Environment(\.modelContext) private var modelContext
     @Query private var breathExercises: [BreathExercise]
-    
+
     @Environment(\.openWindow) private var openWindow
     @Environment(\.dismiss) private var dismiss
-    
-    
+
     var body: some View {
         NavigationSplitView {
             List {
@@ -34,16 +33,17 @@ struct BreathExerciseListView: View {
                         }
                     }
                     .onDelete(perform: deleteItems)
-                }}
-#if os(macOS)
-            .navigationSplitViewColumnWidth(min: 180, ideal: 200)
-#endif
-            .toolbar {
-#if os(iOS)
-                ToolbarItem(placement: .navigationBarTrailing) {
-                    EditButton()
                 }
-#endif
+            }
+            #if os(macOS)
+            .navigationSplitViewColumnWidth(min: 180, ideal: 200)
+            #endif
+            .toolbar {
+                #if os(iOS)
+                    ToolbarItem(placement: .navigationBarTrailing) {
+                        EditButton()
+                    }
+                #endif
                 ToolbarItem {
                     NavigationLink(destination: BreathExerciseSettingsView()) {
                         Label("Add breath exercise", systemImage: "plus")
@@ -54,8 +54,7 @@ struct BreathExerciseListView: View {
             Text("Select an breath exercise")
         }
     }
-    
-    
+
     private func deleteItems(offsets: IndexSet) {
         withAnimation {
             for index in offsets {
