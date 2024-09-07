@@ -16,7 +16,7 @@ struct BreathExerciseListView: View {
     @Environment(\.dismiss) private var dismiss
 
     var body: some View {
-        NavigationSplitView {
+        NavigationStack {
             List {
                 if breathExercises.isEmpty {
                     Text("Add your first breath exercise from the top right plus button")
@@ -35,23 +35,17 @@ struct BreathExerciseListView: View {
                     .onDelete(perform: deleteItems)
                 }
             }
-            #if os(macOS)
-            .navigationSplitViewColumnWidth(min: 180, ideal: 200)
-            #endif
             .toolbar {
-                #if os(iOS)
-                    ToolbarItem(placement: .navigationBarTrailing) {
-                        EditButton()
-                    }
-                #endif
+                ToolbarItem(placement: .navigationBarTrailing) {
+                    EditButton()
+                }
+
                 ToolbarItem {
                     NavigationLink(destination: BreathExerciseSettingsView()) {
                         Label("Add breath exercise", systemImage: "plus")
                     }
                 }
             }
-        } detail: {
-            Text("Select an breath exercise")
         }
     }
 

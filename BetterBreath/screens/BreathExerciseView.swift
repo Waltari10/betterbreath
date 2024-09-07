@@ -13,6 +13,7 @@ struct BreathExerciseView: View {
     @State private var isActive = true
     @State private var timeElapsed = 0.0
     @State private var vibrate = false
+    @State private var audioEnabled = true
 
     var breathExercise: BreathExercise
 
@@ -20,7 +21,6 @@ struct BreathExerciseView: View {
 
     private func queuVibrations(totalDuration: Double) {
         if !vibrate { return }
-        print("QueueVibrations")
 
         let numIntervals = 10
 
@@ -92,6 +92,10 @@ struct BreathExerciseView: View {
                 audioPlayer?.rate = Float(ratio)
             }
 
+            if !audioEnabled {
+                audioPlayer?.volume = 0.0
+            }
+
             audioPlayer?.play()
         } catch {
             print("Could not load file \(resource).\(ext): \(error)")
@@ -115,8 +119,6 @@ struct BreathExerciseView: View {
     func playChime() {
         if !isActive { return }
 
-        print("PLAY CHIME")
-
         playAudio(resource: "chime", ext: "wav")
     }
 
@@ -126,48 +128,67 @@ struct BreathExerciseView: View {
             isActive = false
         }
     }
-    
+
     func onViewUnmount() {
         isActive = false
         audioPlayer?.stop()
     }
 
     var body: some View {
-        Text("Pattern \(String(format: "%.1f", breathExercise.inBreathDuration)) - \(String(format: "%.1f", breathExercise.fullBreathHoldDuration)) - \(String(format: "%.1f", breathExercise.outBreathDuration)) - \(String(format: "%.1f", breathExercise.emptyHoldDuration))")
-            .onDisappear {
-                onViewUnmount()
-            }
-
-        GeometryReader { geometry in
-            // Using ZStack to overlay circles
-            ZStack {
-                // Outer circle
-                Circle()
-                    .strokeBorder(Color.blue, lineWidth: 2)
-                    .frame(width: min(geometry.size.width * 0.75, 300),
-                           height: min(geometry.size.width * 0.75, 300))
-
-                // Inner circle
-                Circle()
-                    .fill(Color.blue)
-                    .scaleEffect(scale) // Use scale to animate size
-                    .frame(width: min(geometry.size.width * 0.75, 300), // Smaller size
-                           height: min(geometry.size.width * 0.75, 300))
-                    .onAppear {
-                        animateCircle()
-                    }
-            }
-            .frame(maxWidth: .infinity, maxHeight: .infinity)
-        }
-        .edgesIgnoringSafeArea(.all)
-
-        HStack {
-            TimerView(timeElapsed: $timeElapsed, isActive: $isActive)
-                .onChange(of: timeElapsed) { newValue in
-                    checkTimeAndTriggerFunction(time: newValue)
+        NavigationStack {
+            Text("Pattern \(String(format: "%.1f", breathExercise.inBreathDuration)) - \(String(format: "%.1f", breathExercise.fullBreathHoldDuration)) - \(String(format: "%.1f", breathExercise.outBreathDuration)) - \(String(format: "%.1f", breathExercise.emptyHoldDuration))")
+                .onDisappear {
+                    onViewUnmount()
                 }
-            Text("/")
-            TimerView(timeElapsed: .constant(breathExercise.exerciseDuration), isActive: .constant(false))
+
+            GeometryReader { geometry in
+                // Using ZStack to overlay circles
+                ZStack {
+                    // Outer circle
+                    Circle()
+                        .strokeBorder(Color.blue, lineWidth: 2)
+                        .frame(width: min(geometry.size.width * 0.75, 300),
+                               height: min(geometry.size.width * 0.75, 300))
+
+                    // Inner circle
+                    Circle()
+                        .fill(Color.blue)
+                        .scaleEffect(scale)
+                        .frame(width: min(geometry.size.width * 0.75, 300), // Smaller size
+                               height: min(geometry.size.width * 0.75, 300))
+                        .onAppear {
+                            animateCircle()
+                        }
+                }
+                .frame(maxWidth: .infinity, maxHeight: .infinity)
+            }
+            .edgesIgnoringSafeArea(.all)
+
+            HStack {
+                TimerView(timeElapsed: $timeElapsed, isActive: $isActive)
+                    .onChange(of: timeElapsed) { newValue in
+                        checkTimeAndTriggerFunction(time: newValue)
+                    }
+                Text("/")
+                TimerView(timeElapsed: .constant(breathExercise.exerciseDuration), isActive: .constant(false))
+            }
+        }.toolbar {
+            ToolbarItem(placement: .navigationBarTrailing) {
+                Button(action: {
+                    if audioEnabled {
+                        audioPlayer?.volume = 0.0
+                        audioEnabled = false
+                    } else {
+                        audioPlayer?.volume = 1.0
+                        audioEnabled = true
+                    }
+
+                }) {
+                    Image(systemName: audioEnabled ? "speaker.wave.2.circle.fill" : "speaker.slash.circle.fill")
+                        .imageScale(.large)
+                        .font(.system(size: 24))
+                }
+            }
         }
     }
 }
