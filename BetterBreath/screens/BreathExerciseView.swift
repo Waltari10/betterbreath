@@ -57,12 +57,14 @@ struct BreathExerciseView: View {
 
         withAnimation(.easeInOut(duration: breathExercise.inBreathDuration)) {
             queuVibrations(totalDuration: breathExercise.inBreathDuration)
+            playInBreath(duration: breathExercise.inBreathDuration)
             scale = 1.0
         }
 
         DispatchQueue.main.asyncAfter(deadline: .now() + breathExercise.inBreathDuration + breathExercise.fullBreathHoldDuration) {
             withAnimation(.easeInOut(duration: breathExercise.outBreathDuration)) {
                 scale = 0.0
+                playOutBreath(duration: breathExercise.outBreathDuration)
                 queuVibrations(totalDuration: breathExercise.outBreathDuration)
             }
         }
@@ -72,20 +74,50 @@ struct BreathExerciseView: View {
         }
     }
 
-    func playChime() {
-        if !isActive { return }
-
-        guard let soundURL = Bundle.main.url(forResource: "chime", withExtension: "wav") else {
+    func playAudio(resource: String, ext: String, targetDuration: Double? = nil) {
+        guard let soundURL = Bundle.main.url(forResource: resource, withExtension: ext) else {
             print("Sound file not found.")
             return
         }
 
         do {
             audioPlayer = try AVAudioPlayer(contentsOf: soundURL)
+
+            let originalTime = audioPlayer?.duration
+
+            if targetDuration != nil && originalTime != nil {
+                let ratio = originalTime! / targetDuration!
+
+                audioPlayer?.enableRate = true
+                audioPlayer?.rate = Float(ratio)
+            }
+
             audioPlayer?.play()
         } catch {
-            print("Could not load file: \(error)")
+            print("Could not load file \(resource).\(ext): \(error)")
         }
+    }
+
+    func playInBreath(
+        duration: Double
+    ) {
+        if !isActive { return }
+        playAudio(resource: "in_breath", ext: "mp3", targetDuration: duration)
+    }
+
+    func playOutBreath(
+        duration: Double
+    ) {
+        if !isActive { return }
+        playAudio(resource: "out_breath", ext: "mp3", targetDuration: duration)
+    }
+
+    func playChime() {
+        if !isActive { return }
+
+        print("PLAY CHIME")
+
+        playAudio(resource: "chime", ext: "wav")
     }
 
     func checkTimeAndTriggerFunction(time: Double) {
@@ -94,9 +126,17 @@ struct BreathExerciseView: View {
             isActive = false
         }
     }
+    
+    func onViewUnmount() {
+        isActive = false
+        audioPlayer?.stop()
+    }
 
     var body: some View {
         Text("Pattern \(String(format: "%.1f", breathExercise.inBreathDuration)) - \(String(format: "%.1f", breathExercise.fullBreathHoldDuration)) - \(String(format: "%.1f", breathExercise.outBreathDuration)) - \(String(format: "%.1f", breathExercise.emptyHoldDuration))")
+            .onDisappear {
+                onViewUnmount()
+            }
 
         GeometryReader { geometry in
             // Using ZStack to overlay circles
@@ -115,9 +155,6 @@ struct BreathExerciseView: View {
                            height: min(geometry.size.width * 0.75, 300))
                     .onAppear {
                         animateCircle()
-                    }
-                    .onDisappear {
-                        self.isActive = false
                     }
             }
             .frame(maxWidth: .infinity, maxHeight: .infinity)

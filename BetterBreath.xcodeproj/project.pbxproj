@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		60975EC12C8C3A12000F5699 /* in_breath.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 60975EBF2C8C3A12000F5699 /* in_breath.mp3 */; };
+		60975EC22C8C3A12000F5699 /* out_breath.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 60975EC02C8C3A12000F5699 /* out_breath.mp3 */; };
 		60EC2CE12C52BCF7007EE00E /* BreathExerciseSettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 60EC2CE02C52BCF7007EE00E /* BreathExerciseSettingsView.swift */; };
 		60EED0A72C578A0E00CE3B2A /* TimePickerModalView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 60EED0A62C578A0E00CE3B2A /* TimePickerModalView.swift */; };
 		60EF16AC2C551BB700E7D0AF /* BreathExercise.swift in Sources */ = {isa = PBXBuildFile; fileRef = 60EF16AB2C551BB700E7D0AF /* BreathExercise.swift */; };
@@ -41,6 +43,8 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		60975EBF2C8C3A12000F5699 /* in_breath.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = in_breath.mp3; sourceTree = "<group>"; };
+		60975EC02C8C3A12000F5699 /* out_breath.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = out_breath.mp3; sourceTree = "<group>"; };
 		60EC2CE02C52BCF7007EE00E /* BreathExerciseSettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BreathExerciseSettingsView.swift; sourceTree = "<group>"; };
 		60EED0A62C578A0E00CE3B2A /* TimePickerModalView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimePickerModalView.swift; sourceTree = "<group>"; };
 		60EF16AB2C551BB700E7D0AF /* BreathExercise.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BreathExercise.swift; sourceTree = "<group>"; };
@@ -117,6 +121,8 @@
 		60EF16F12C556E0D00E7D0AF /* assets */ = {
 			isa = PBXGroup;
 			children = (
+				60975EBF2C8C3A12000F5699 /* in_breath.mp3 */,
+				60975EC02C8C3A12000F5699 /* out_breath.mp3 */,
 				60EF16F22C556E1900E7D0AF /* chime.wav */,
 			);
 			path = assets;
@@ -300,6 +306,8 @@
 				60EF16F32C556E1900E7D0AF /* chime.wav in Resources */,
 				60FC62DE2C52B67200550D32 /* Preview Assets.xcassets in Resources */,
 				60FC62DA2C52B67200550D32 /* Assets.xcassets in Resources */,
+				60975EC12C8C3A12000F5699 /* in_breath.mp3 in Resources */,
+				60975EC22C8C3A12000F5699 /* out_breath.mp3 in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
