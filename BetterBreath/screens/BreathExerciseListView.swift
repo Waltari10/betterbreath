@@ -15,6 +15,17 @@ struct BreathExerciseListView: View {
     @Environment(\.openWindow) private var openWindow
     @Environment(\.dismiss) private var dismiss
 
+    /* On view init make sure user exists with id 0
+     init() {
+         do {
+             let newUser = User()
+             modelContext.insert(newUser)
+
+         } catch {
+             print("Failed to create user: \(error)")
+         }
+     }*/
+
     var body: some View {
         NavigationStack {
             List {

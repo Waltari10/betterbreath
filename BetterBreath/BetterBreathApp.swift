@@ -12,6 +12,7 @@ import SwiftUI
 struct BetterBreathApp: App {
     var sharedModelContainer: ModelContainer = {
         let schema = Schema([
+            User.self,
             BreathExercise.self,
         ])
         let modelConfiguration = ModelConfiguration(schema: schema, isStoredInMemoryOnly: false)
