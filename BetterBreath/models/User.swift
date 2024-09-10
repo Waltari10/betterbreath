@@ -10,7 +10,7 @@ import SwiftData
 
 @Model
 final class User {
-    var id: String = "0"
+    @Attribute(.unique) var id: String = "0"
     var breathSoundEnabled: Bool = true
 
     init(id: String = "0", breathSoundEnabled: Bool = true) {

@@ -12,19 +12,15 @@ struct BreathExerciseListView: View {
     @Environment(\.modelContext) private var modelContext
     @Query private var breathExercises: [BreathExercise]
 
-    @Environment(\.openWindow) private var openWindow
-    @Environment(\.dismiss) private var dismiss
+    @Query private var users: [User]
+    var user: User? { users.first }
 
-    /* On view init make sure user exists with id 0
-     init() {
-         do {
-             let newUser = User()
-             modelContext.insert(newUser)
-
-         } catch {
-             print("Failed to create user: \(error)")
-         }
-     }*/
+    private func createUser() {
+        if user?.id == nil {
+            let newUser = User()
+            modelContext.insert(newUser)
+        }
+    }
 
     var body: some View {
         NavigationStack {
@@ -57,6 +53,7 @@ struct BreathExerciseListView: View {
                     }
                 }
             }
+            .onAppear(perform: createUser)
         }
     }
 

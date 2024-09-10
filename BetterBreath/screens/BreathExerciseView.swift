@@ -6,6 +6,7 @@
 //
 
 import AVFoundation
+import SwiftData
 import SwiftUI
 
 struct BreathExerciseView: View {
@@ -13,7 +14,16 @@ struct BreathExerciseView: View {
     @State private var isActive = true
     @State private var timeElapsed = 0.0
     @State private var vibrate = false
+    @Environment(\.modelContext) private var modelContext
+
+    @Query private var users: [User]
+    var user: User? { users.first }
+
     @State private var audioEnabled = true
+
+    func initSound() {
+        audioEnabled = user?.breathSoundEnabled ?? true
+    }
 
     var breathExercise: BreathExercise
 
@@ -75,8 +85,8 @@ struct BreathExerciseView: View {
     }
 
     func playAudio(resource: String, ext: String, targetDuration: Double? = nil) {
+        initSound()
         guard let soundURL = Bundle.main.url(forResource: resource, withExtension: ext) else {
-            print("Sound file not found.")
             return
         }
 
@@ -178,9 +188,13 @@ struct BreathExerciseView: View {
                     if audioEnabled {
                         audioPlayer?.volume = 0.0
                         audioEnabled = false
+                        let newUser = User(breathSoundEnabled: false)
+                        modelContext.insert(newUser)
                     } else {
                         audioPlayer?.volume = 1.0
                         audioEnabled = true
+                        let newUser = User(breathSoundEnabled: true)
+                        modelContext.insert(newUser)
                     }
 
                 }) {
@@ -190,6 +204,7 @@ struct BreathExerciseView: View {
                 }
             }
         }
+        .onAppear(perform: initSound)
     }
 }
 
