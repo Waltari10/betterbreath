@@ -32,6 +32,11 @@ Good old non-digital meditation bands also offer this tactile feedback where you
 - More fanfare when finishing meditation
 - Keeping track of total meditation stats
 - Heart rate and HRV tracking during practice
+- UI improvements
+  - First use straigth into breathing screen
+  - From breathing screen allow navigating to configuring
+  - Add headers to customize breath screen "In breath", "out breath"
+  - See examples from OLO
 
 ## Demo video
 
