@@ -40,11 +40,7 @@ struct BreathExerciseSettingsView: View {
                 Divider().padding(.vertical, 4).padding(.bottom, 8)
 
                 durationButton(pickerType: .fullHold, title: "Hold", modalTitle: "Full hold", duration: $fullBreathHoldDuration)
-            }.padding(.all, 16)
-                .background(Color(.white)) // Background color with system gray
-                .cornerRadius(12) // Adjust the radius as per your need
-                .padding(.vertical, 8)
-                .padding(.horizontal, 16)
+            }.modifier(CardStyleModifier())
 
             VStack(alignment: .leading) {
                 Text("Out breath").font(.title2).font(.title2)
@@ -55,11 +51,7 @@ struct BreathExerciseSettingsView: View {
                 Divider().padding(.vertical, 4).padding(.bottom, 8)
 
                 durationButton(pickerType: .emptyHold, title: "Hold", modalTitle: "Empty hold", duration: $emptyHoldDuration)
-            }.padding(.all, 16)
-                .background(Color(.white)) // Background color with system gray
-                .cornerRadius(12) // Adjust the radius as per your need
-                .padding(.vertical, 8)
-                .padding(.horizontal, 16)
+            }.modifier(CardStyleModifier())
 
             VStack(alignment: .leading) {
                 Text("Duration").font(.title2).font(.title2)
@@ -67,11 +59,7 @@ struct BreathExerciseSettingsView: View {
                     .padding(.bottom, 8)
                 durationButton(pickerType: .exerciseDuration, title: nil, modalTitle: "Exercise duration", duration: $exerciseDuration)
                     .listRowSeparator(.hidden)
-            }.padding(.all, 16)
-                .background(Color(.white)) // Background color with system gray
-                .cornerRadius(12) // Adjust the radius as per your need
-                .padding(.vertical, 8)
-                .padding(.horizontal, 16)
+            }.modifier(CardStyleModifier())
                 .sheet(isPresented: $showPicker) {
                     TimePickerModalView(
                         selectedTimeInSeconds: $pickerTimeInSeconds,
