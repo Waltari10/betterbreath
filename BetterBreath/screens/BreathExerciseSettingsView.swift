@@ -2,7 +2,7 @@ import SwiftUI
 
 enum PickerType: String {
     case inBreath
-    case fullhHold = "fullHold"
+    case fullHold
     case outBreath
     case emptyHold
     case exerciseDuration
@@ -22,6 +22,7 @@ struct BreathExerciseSettingsView: View {
     @State private var emptyHoldDuration: Double = 0.0
     @State private var exerciseDuration: Double = 60.0
     @State private var pickerTitle: String = ""
+    @State private var selectedPickerType: PickerType? = nil
     @State private var exerciseName: String = "New exercise"
 
     @State private var showPicker = false
@@ -31,19 +32,17 @@ struct BreathExerciseSettingsView: View {
         List {
             Text("In breath").font(.title2)
                 .listRowSeparator(.hidden)
-                .padding(.top)
-            durationButton(title: "In", duration: $inBreathDuration)
-                .listRowSeparator(.hidden)
-            durationButton(title: "Hold", duration: $fullBreathHoldDuration)
-                .padding(.bottom, 8)
+                .padding(.top, 12)
+            durationButton(pickerType: .inBreath, title: "In", modalTitle: "Breath in", duration: $inBreathDuration)
 
-            Text("Out breath").font(.title2).padding(.top, 8)
-            durationButton(title: "Out", duration: $outBreathDuration)
-                .listRowSeparator(.hidden)
-            durationButton(title: "Hold", duration: $emptyHoldDuration)
-                .padding(.bottom, 8)
-            Text("Duration").font(.title2).padding(.top, 8)
-            durationButton(title: nil, duration: $exerciseDuration)
+            durationButton(pickerType: .fullHold, title: "Hold", modalTitle: "Full hold", duration: $fullBreathHoldDuration)
+
+            Text("Out breath").font(.title2).listRowSeparator(.hidden)
+            durationButton(pickerType: .outBreath, title: "Out", modalTitle: "Breath out", duration: $outBreathDuration)
+
+            durationButton(pickerType: .emptyHold, title: "Hold", modalTitle: "Empty hold", duration: $emptyHoldDuration)
+            Text("Duration").font(.title2).listRowSeparator(.hidden)
+            durationButton(pickerType: .exerciseDuration, title: nil, modalTitle: "Exercise duration", duration: $exerciseDuration)
                 .listRowSeparator(.hidden)
         }
         .listRowSeparator(.hidden)
@@ -51,17 +50,19 @@ struct BreathExerciseSettingsView: View {
             TimePickerModalView(
                 selectedTimeInSeconds: $pickerTimeInSeconds,
                 title: $pickerTitle
-            ).onChange(of: pickerTimeInSeconds) { newValue in
-                switch pickerTitle {
-                case PickerType.inBreath.rawValue:
+            ).onChange(of: pickerTimeInSeconds) {
+                newValue in
+
+                switch selectedPickerType {
+                case .inBreath:
                     inBreathDuration = newValue
-                case PickerType.fullhHold.rawValue:
+                case .fullHold:
                     fullBreathHoldDuration = newValue
-                case PickerType.outBreath.rawValue:
+                case .outBreath:
                     outBreathDuration = newValue
-                case PickerType.emptyHold.rawValue:
+                case .emptyHold:
                     emptyHoldDuration = newValue
-                case PickerType.exerciseDuration.rawValue:
+                case .exerciseDuration:
                     exerciseDuration = newValue
                 default:
                     break
@@ -83,16 +84,17 @@ struct BreathExerciseSettingsView: View {
         }.padding()
     }
 
-    private func onPressSelectDuration(title: String, duration: Binding<Double>) {
+    private func onPressSelectDuration(pickerType: PickerType, title: String, duration: Binding<Double>) {
         pickerTimeInSeconds = duration.wrappedValue
         pickerTitle = "\(title)"
+        selectedPickerType = pickerType
         showPicker = true
     }
 
-    private func durationButton(title: String? = nil, duration: Binding<Double>) -> some View {
+    private func durationButton(pickerType: PickerType, title: String? = nil, modalTitle: String, duration: Binding<Double>) -> some View {
         Button(
             action: {
-                onPressSelectDuration(title: "\(title)", duration: duration)
+                onPressSelectDuration(pickerType: pickerType, title: "\(modalTitle)", duration: duration)
             }) {
                 HStack {
                     VStack(alignment: .leading) {
