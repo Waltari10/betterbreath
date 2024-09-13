@@ -1,11 +1,11 @@
 import SwiftUI
 
 enum PickerType: String {
-    case inBreath = "In Breath"
-    case fullBreathHold = "Full Breath Hold"
-    case outBreath = "Out Breath"
-    case emptyHold = "Empty Hold Breath"
-    case exerciseDuration = "Exercise Duration"
+    case inBreath
+    case fullhHold = "fullHold"
+    case outBreath
+    case emptyHold
+    case exerciseDuration
 
     var title: String {
         return rawValue
@@ -29,12 +29,24 @@ struct BreathExerciseSettingsView: View {
 
     var body: some View {
         List {
-            durationButton(PickerType.inBreath.rawValue, duration: $inBreathDuration)
-            durationButton(PickerType.fullBreathHold.rawValue, duration: $fullBreathHoldDuration)
-            durationButton(PickerType.outBreath.rawValue, duration: $outBreathDuration)
-            durationButton(PickerType.emptyHold.rawValue, duration: $emptyHoldDuration)
-            durationButton(PickerType.exerciseDuration.rawValue, duration: $exerciseDuration)
+            Text("In breath").font(.title2)
+                .listRowSeparator(.hidden)
+                .padding(.top)
+            durationButton(title: "In", duration: $inBreathDuration)
+                .listRowSeparator(.hidden)
+            durationButton(title: "Hold", duration: $fullBreathHoldDuration)
+                .padding(.bottom, 8)
+
+            Text("Out breath").font(.title2).padding(.top, 8)
+            durationButton(title: "Out", duration: $outBreathDuration)
+                .listRowSeparator(.hidden)
+            durationButton(title: "Hold", duration: $emptyHoldDuration)
+                .padding(.bottom, 8)
+            Text("Duration").font(.title2).padding(.top, 8)
+            durationButton(title: nil, duration: $exerciseDuration)
+                .listRowSeparator(.hidden)
         }
+        .listRowSeparator(.hidden)
         .sheet(isPresented: $showPicker) {
             TimePickerModalView(
                 selectedTimeInSeconds: $pickerTimeInSeconds,
@@ -43,7 +55,7 @@ struct BreathExerciseSettingsView: View {
                 switch pickerTitle {
                 case PickerType.inBreath.rawValue:
                     inBreathDuration = newValue
-                case PickerType.fullBreathHold.rawValue:
+                case PickerType.fullhHold.rawValue:
                     fullBreathHoldDuration = newValue
                 case PickerType.outBreath.rawValue:
                     outBreathDuration = newValue
@@ -77,7 +89,7 @@ struct BreathExerciseSettingsView: View {
         showPicker = true
     }
 
-    private func durationButton(_ title: String, duration: Binding<Double>) -> some View {
+    private func durationButton(title: String? = nil, duration: Binding<Double>) -> some View {
         Button(
             action: {
                 onPressSelectDuration(title: "\(title)", duration: duration)
@@ -85,10 +97,15 @@ struct BreathExerciseSettingsView: View {
                 HStack {
                     VStack(alignment: .leading) {
                         Text("\(duration.wrappedValue, specifier: "%.1f") sec").bold()
-                        Text("\(title)")
+
+                        if let unwrappedTitle = title {
+                            Text(unwrappedTitle)
+                        }
                     }
+
                     Spacer()
-                    Image(systemName: "chevron.right") // Example system icon
+
+                    Image(systemName: "chevron.right")
                         .imageScale(.small)
                         .foregroundColor(.gray)
                 }

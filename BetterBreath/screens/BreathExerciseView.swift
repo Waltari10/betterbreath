@@ -43,25 +43,6 @@ struct BreathExerciseView: View {
         }
     }
 
-    private func bezierBlend(t: Double) -> Double {
-        return t * t * (3 - 2 * t)
-    }
-
-    private func InOutQuadBlend(t: Double) -> Double {
-        if t <= 0.5 {
-            return 2 * t * t
-        }
-
-        let modT = t - 0.5
-        return 2 * modT * (1 - modT) + 0.5
-    }
-
-    // Double check is correct
-    private func easeInOut(t: Double) -> Double {
-        // This is a simple easeInOut function using a cubic polynomial expression
-        return t < 0.5 ? 4 * t * t * t : 1 - pow(-2 * t + 2, 3) / 2
-    }
-
     private func animateCircle() {
         if !isActive { return }
 
@@ -201,6 +182,9 @@ struct BreathExerciseView: View {
                     Image(systemName: audioEnabled ? "speaker.wave.2.circle.fill" : "speaker.slash.circle.fill")
                         .imageScale(.large)
                         .font(.system(size: 24))
+                        .transaction { transaction in
+                            transaction.animation = nil
+                        }
                 }
             }
         }
