@@ -29,46 +29,68 @@ struct BreathExerciseSettingsView: View {
     @State private var pickerTimeInSeconds: Double = 0.0
 
     var body: some View {
-        List {
-            Text("In breath").font(.title2)
-                .listRowSeparator(.hidden)
-                .padding(.top, 12)
-            durationButton(pickerType: .inBreath, title: "In", modalTitle: "Breath in", duration: $inBreathDuration)
+        VStack {
+            VStack(alignment: .leading) {
+                Text("In breath").font(.title2)
+                    .padding(.top, 4)
+                    .padding(.bottom, 8)
 
-            durationButton(pickerType: .fullHold, title: "Hold", modalTitle: "Full hold", duration: $fullBreathHoldDuration)
+                durationButton(pickerType: .inBreath, title: "In", modalTitle: "Breath in", duration: $inBreathDuration)
 
-            Text("Out breath").font(.title2).listRowSeparator(.hidden)
-            durationButton(pickerType: .outBreath, title: "Out", modalTitle: "Breath out", duration: $outBreathDuration)
+                Divider().padding(.vertical, 4).padding(.bottom, 8)
 
-            durationButton(pickerType: .emptyHold, title: "Hold", modalTitle: "Empty hold", duration: $emptyHoldDuration)
-            Text("Duration").font(.title2).listRowSeparator(.hidden)
-            durationButton(pickerType: .exerciseDuration, title: nil, modalTitle: "Exercise duration", duration: $exerciseDuration)
-                .listRowSeparator(.hidden)
-        }
-        .listRowSeparator(.hidden)
-        .sheet(isPresented: $showPicker) {
-            TimePickerModalView(
-                selectedTimeInSeconds: $pickerTimeInSeconds,
-                title: $pickerTitle
-            ).onChange(of: pickerTimeInSeconds) {
-                newValue in
+                durationButton(pickerType: .fullHold, title: "Hold", modalTitle: "Full hold", duration: $fullBreathHoldDuration)
+            }.padding(.all, 16)
+                .background(Color(.white)) // Background color with system gray
+                .cornerRadius(12) // Adjust the radius as per your need
+                .padding(.all, 16)
+            VStack(alignment: .leading) {
+                Text("Out breath").font(.title2).font(.title2)
+                    .padding(.top, 4)
+                    .padding(.bottom, 8)
+                durationButton(pickerType: .outBreath, title: "Out", modalTitle: "Breath out", duration: $outBreathDuration)
 
-                switch selectedPickerType {
-                case .inBreath:
-                    inBreathDuration = newValue
-                case .fullHold:
-                    fullBreathHoldDuration = newValue
-                case .outBreath:
-                    outBreathDuration = newValue
-                case .emptyHold:
-                    emptyHoldDuration = newValue
-                case .exerciseDuration:
-                    exerciseDuration = newValue
-                default:
-                    break
+                Divider().padding(.vertical, 4).padding(.bottom, 8)
+
+                durationButton(pickerType: .emptyHold, title: "Hold", modalTitle: "Empty hold", duration: $emptyHoldDuration)
+            }.padding(.all, 16)
+                .background(Color(.white)) // Background color with system gray
+                .cornerRadius(12) // Adjust the radius as per your need
+                .padding(.all, 16)
+            VStack(alignment: .leading) {
+                Text("Duration").font(.title2).font(.title2)
+                    .padding(.top, 4)
+                    .padding(.bottom, 8)
+                durationButton(pickerType: .exerciseDuration, title: nil, modalTitle: "Exercise duration", duration: $exerciseDuration)
+                    .listRowSeparator(.hidden)
+            }.padding(.all, 16)
+                .background(Color(.white)) // Background color with system gray
+                .cornerRadius(12) // Adjust the radius as per your need
+                .padding(.all, 16)
+                .sheet(isPresented: $showPicker) {
+                    TimePickerModalView(
+                        selectedTimeInSeconds: $pickerTimeInSeconds,
+                        title: $pickerTitle
+                    ).onChange(of: pickerTimeInSeconds) {
+                        newValue in
+
+                        switch selectedPickerType {
+                        case .inBreath:
+                            inBreathDuration = newValue
+                        case .fullHold:
+                            fullBreathHoldDuration = newValue
+                        case .outBreath:
+                            outBreathDuration = newValue
+                        case .emptyHold:
+                            emptyHoldDuration = newValue
+                        case .exerciseDuration:
+                            exerciseDuration = newValue
+                        default:
+                            break
+                        }
+                    }
                 }
-            }
-        }
+        }.background(Color(.systemGray6))
 
         Button(action: {
             saveExercise()
