@@ -43,7 +43,9 @@ struct BreathExerciseSettingsView: View {
             }.padding(.all, 16)
                 .background(Color(.white)) // Background color with system gray
                 .cornerRadius(12) // Adjust the radius as per your need
-                .padding(.all, 16)
+                .padding(.vertical, 8)
+                .padding(.horizontal, 16)
+
             VStack(alignment: .leading) {
                 Text("Out breath").font(.title2).font(.title2)
                     .padding(.top, 4)
@@ -56,7 +58,9 @@ struct BreathExerciseSettingsView: View {
             }.padding(.all, 16)
                 .background(Color(.white)) // Background color with system gray
                 .cornerRadius(12) // Adjust the radius as per your need
-                .padding(.all, 16)
+                .padding(.vertical, 8)
+                .padding(.horizontal, 16)
+
             VStack(alignment: .leading) {
                 Text("Duration").font(.title2).font(.title2)
                     .padding(.top, 4)
@@ -66,7 +70,8 @@ struct BreathExerciseSettingsView: View {
             }.padding(.all, 16)
                 .background(Color(.white)) // Background color with system gray
                 .cornerRadius(12) // Adjust the radius as per your need
-                .padding(.all, 16)
+                .padding(.vertical, 8)
+                .padding(.horizontal, 16)
                 .sheet(isPresented: $showPicker) {
                     TimePickerModalView(
                         selectedTimeInSeconds: $pickerTimeInSeconds,
@@ -90,6 +95,7 @@ struct BreathExerciseSettingsView: View {
                         }
                     }
                 }
+            Spacer()
         }.background(Color(.systemGray6))
 
         Button(action: {
