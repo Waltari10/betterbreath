@@ -10,6 +10,9 @@ import SwiftUI
 
 struct BreathExerciseListView: View {
     @Environment(\.modelContext) private var modelContext
+
+    @State private var editMode: EditMode = .inactive
+
     @Query private var breathExercises: [BreathExercise]
 
     @Query private var users: [User]
@@ -38,13 +41,30 @@ struct BreathExerciseListView: View {
                                 Text("Pattern: \(String(format: "%.1f", breathExercise.inBreathDuration)) - \(String(format: "%.1f", breathExercise.fullBreathHoldDuration)) - \(String(format: "%.1f", breathExercise.outBreathDuration)) - \(String(format: "%.1f", breathExercise.emptyHoldDuration))")
                             }
                         }
+                        .frame(maxWidth: .infinity)
                     }
                     .onDelete(perform: deleteItems)
                 }
             }
             .toolbar {
                 ToolbarItem(placement: .navigationBarTrailing) {
-                    EditButton()
+                    Button(action: {
+                        withAnimation {
+                            if editMode == .inactive {
+                                editMode = .active
+                            } else {
+                                editMode = .inactive
+                            }
+                        }
+                    }) {
+                        if editMode == .inactive {
+                            Image(systemName: "trash")
+                                .imageScale(.large)
+                                .font(.system(size: 16))
+                        } else {
+                            Text("Done")
+                        }
+                    }
                 }
 
                 ToolbarItem {
@@ -53,6 +73,7 @@ struct BreathExerciseListView: View {
                     }
                 }
             }
+            .environment(\.editMode, $editMode)
             .onAppear(perform: createUser)
         }
     }

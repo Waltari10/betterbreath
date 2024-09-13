@@ -19,12 +19,15 @@ Good old non-digital meditation bands also offer this tactile feedback where you
 - A duration after which the exercise ends
 - Play a sound when at the end of exercise
 - Play in and out breath sound to guide breathing
+- mute/enable sound
+- UI improvements
+    - Add headers to customize breath screen "In breath", "out breath"
 
 ## TODO
 
 - continue/Pause
-- mute/enable sound
 - Phone vibration that guides the breathing
+- Create a navigation/routing layer
 - Add a 3 sec countdown before the breath exercise starts 
 - Apple watch support
 - Modifying existing breath exercise
@@ -33,10 +36,9 @@ Good old non-digital meditation bands also offer this tactile feedback where you
 - Keeping track of total meditation stats
 - Heart rate and HRV tracking during practice
 - UI improvements
-  - First use straigth into breathing screen
-  - From breathing screen allow navigating to configuring
-  - Add headers to customize breath screen "In breath", "out breath"
-  - See examples from OLO
+    - First use straigth into breathing screen
+    - From breathing screen allow navigating to configuring
+    - See examples from OLO
 
 ## Demo video
 

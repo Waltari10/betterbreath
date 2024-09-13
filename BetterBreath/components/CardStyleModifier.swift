@@ -11,10 +11,10 @@ import SwiftUI
 struct CardStyleModifier: ViewModifier {
     func body(content: Content) -> some View {
         content
-            .padding(16) // Inner padding
-            .background(Color(.white)) // Background color
-            .cornerRadius(12) // Corner radius
-            .padding(.vertical, 8) // Outer vertical padding
-            .padding(.horizontal, 16) // Outer horizontal padding
+            .padding(16) // inner padding
+            .background(Color(.white))
+            .cornerRadius(12)
+            .padding(.vertical, 8) // outer padding
+            .padding(.horizontal, 16)
     }
 }
