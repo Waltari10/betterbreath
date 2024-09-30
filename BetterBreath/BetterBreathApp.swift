@@ -10,6 +10,9 @@ import SwiftUI
 
 @main
 struct BetterBreathApp: App {
+    
+    @ObservedObject var router = Router()
+    
     var sharedModelContainer: ModelContainer = {
         let schema = Schema([
             User.self,
@@ -26,7 +29,19 @@ struct BetterBreathApp: App {
 
     var body: some Scene {
         WindowGroup {
-            BreathExerciseListView()
+            
+            NavigationStack(path: $router.navPath) {
+                BreathExerciseListView()
+               .navigationDestination(for: Router.Destination.self) { destination in
+                   switch destination {
+                   case .addBreathExercise:
+                       BreathExerciseSettingsView()
+                   case .breathExercise(let breathExercise):
+                       BreathExerciseView(breathExercise: BreathExercise)
+                   }
+               }
+           }
+           .environmentObject(router)
 
         }.modelContainer(sharedModelContainer)
     }

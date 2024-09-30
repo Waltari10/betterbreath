@@ -28,6 +28,7 @@ Good old non-digital meditation bands also offer this tactile feedback where you
 - continue/Pause
 - Phone vibration that guides the breathing
 - Create a navigation/routing layer
+    - https://blorenzop.medium.com/routing-navigation-in-swiftui-f1f8ff818937
 - Add a 3 sec countdown before the breath exercise starts 
 - Apple watch support
 - Modifying existing breath exercise
@@ -67,3 +68,4 @@ Good old non-digital meditation bands also offer this tactile feedback where you
 - A breath in OR out can be anywhere between 1 to 60 seconds alone
 - If breath is less than the default duration of the different breath parts it should play them quickly
 - Should have maximum duration for in/out breath transition in and out durations
+- If breath in/out is less than 6 seconds, then just play the full breath file without any extra logic. No need to split into start, middle, end

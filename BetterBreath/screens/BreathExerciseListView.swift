@@ -12,6 +12,7 @@ struct BreathExerciseListView: View {
     @Environment(\.modelContext) private var modelContext
 
     @State private var editMode: EditMode = .inactive
+    @State private var isNavigating = false
 
     @Query private var breathExercises: [BreathExercise]
 
@@ -33,13 +34,31 @@ struct BreathExerciseListView: View {
                         .foregroundColor(.gray)
                         .italic()
                 } else {
+                    // destination: BreathExerciseView(breathExercise: breathExercise)
                     ForEach(breathExercises) { breathExercise in
-                        NavigationLink(destination: BreathExerciseView(breathExercise: breathExercise)) {
+                        HStack {
                             VStack(alignment: .leading) {
                                 Text("Breath exercise").bold()
                                 Text("Duration: \(formatSeconds(seconds: breathExercise.exerciseDuration))")
                                 Text("Pattern: \(String(format: "%.1f", breathExercise.inBreathDuration)) - \(String(format: "%.1f", breathExercise.fullBreathHoldDuration)) - \(String(format: "%.1f", breathExercise.outBreathDuration)) - \(String(format: "%.1f", breathExercise.emptyHoldDuration))")
                             }
+
+                            Spacer()
+                            Image(systemName: "chevron.right")
+                                .imageScale(.small)
+                                .foregroundColor(.gray)
+                        }
+                        .background(.white)
+                        .navigationDestination(isPresented: $isNavigating) {
+                            Text("FOO")
+                            BreathExerciseView(breathExercise: breathExercise)
+                        }
+                        .onTapGesture(perform: {
+                            print("foo")
+                            isNavigating = true
+                        })
+                        .onLongPressGesture {
+                            print("Long press")
                         }
                         .frame(maxWidth: .infinity)
                     }
