@@ -21,6 +21,11 @@ struct BreathExerciseView: View {
 
     @State private var audioEnabled = true
 
+    func onViewApper() {
+        UIApplication.shared.isIdleTimerDisabled = true
+        initSound()
+    }
+
     func initSound() {
         audioEnabled = user?.breathSoundEnabled ?? true
     }
@@ -135,6 +140,7 @@ struct BreathExerciseView: View {
     func onViewUnmount() {
         isActive = false
         audioPlayer?.stop()
+        UIApplication.shared.isIdleTimerDisabled = false
     }
 
     var body: some View {
@@ -200,7 +206,7 @@ struct BreathExerciseView: View {
                 }
             }
         }
-        .onAppear(perform: initSound)
+        .onAppear(perform: onViewApper)
     }
 }
 
