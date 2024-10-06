@@ -67,7 +67,19 @@ struct BreathExerciseView: View {
 
     func playAudio(resource: String, ext: String, targetDuration: Double? = nil) {
         initSound()
+
+        // Configure audio session
+        let audioSession = AVAudioSession.sharedInstance()
+        do {
+            // Set the category to playback so it can play even in silent mode
+            try audioSession.setCategory(.playback, mode: .default, options: [])
+            try audioSession.setActive(true)
+        } catch {
+            print("Failed to set audio session category: \(error)")
+        }
+
         guard let soundURL = Bundle.main.url(forResource: resource, withExtension: ext) else {
+            print("NO SOUND URL")
             return
         }
 
