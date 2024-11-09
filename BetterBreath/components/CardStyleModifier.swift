@@ -9,10 +9,12 @@ import Foundation
 import SwiftUI
 
 struct CardStyleModifier: ViewModifier {
+    @Environment(\.colorScheme) var colorScheme
+
     func body(content: Content) -> some View {
         content
             .padding(16) // inner padding
-            .background(Color(.white))
+            .background(colorScheme == .dark ? Color.gray.opacity(0.3) : Color.white)
             .cornerRadius(12)
             .padding(.vertical, 8) // outer padding
             .padding(.horizontal, 16)

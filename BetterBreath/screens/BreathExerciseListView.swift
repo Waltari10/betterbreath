@@ -36,7 +36,7 @@ struct BreathExerciseListView: View {
                     ForEach(breathExercises) { breathExercise in
                         NavigationLink(destination: BreathExerciseView(breathExercise: breathExercise)) {
                             VStack(alignment: .leading) {
-                                Text("Breath exercise").bold()
+                                Text("\(breathExercise.name.description)")
                                 Text("Duration: \(formatSeconds(seconds: breathExercise.exerciseDuration))")
                                 Text("Pattern: \(String(format: "%.1f", breathExercise.inBreathDuration)) - \(String(format: "%.1f", breathExercise.fullBreathHoldDuration)) - \(String(format: "%.1f", breathExercise.outBreathDuration)) - \(String(format: "%.1f", breathExercise.emptyHoldDuration))")
                             }
