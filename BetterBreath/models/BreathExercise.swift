@@ -1,10 +1,3 @@
-//
-//  BreathExercise.swift
-//  BetterBreath
-//
-//  Created by Valtteri Laine on 27.7.2024.
-//
-
 import Foundation
 import SwiftData
 

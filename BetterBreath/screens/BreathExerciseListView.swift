@@ -1,10 +1,3 @@
-//
-//  BreathExerciseListView.swift
-//  BetterBreath
-//
-//  Created by Valtteri Laine on 25.7.2024.
-//
-
 import SwiftData
 import SwiftUI
 
