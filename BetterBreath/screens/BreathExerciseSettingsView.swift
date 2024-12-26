@@ -13,6 +13,7 @@ enum PickerType: String {
 }
 
 struct BreathExerciseSettingsView: View {
+    @Environment(\.colorScheme) var colorScheme
     @Environment(\.modelContext) private var modelContext
     @Environment(\.dismiss) var dismiss
 
@@ -25,7 +26,8 @@ struct BreathExerciseSettingsView: View {
     @State private var selectedPickerType: PickerType? = nil
     @State private var exerciseName: String = ""
 
-    private let minValue: Double = 3.0
+    private let minValueBreath: Double = 2.0
+    private let minValueHold: Double = 0.0
     private let maxValue: Double = 60.0
     private let step: Double = 0.5
 
@@ -38,11 +40,8 @@ struct BreathExerciseSettingsView: View {
     var body: some View {
         ScrollView {
             VStack {
-                VStack(alignment: .leading) {
-                    TextField("Exercise name...", text: $exerciseName)
-                        .padding()
-                }
-                .modifier(CardStyleModifier())
+                TextField("Exercise name...", text: $exerciseName)
+                    .modifier(CardStyleModifier())
 
                 VStack(alignment: .leading) {
                     Text("In breath \(String(format: "%.1f", $inBreathDuration.wrappedValue)) s").font(.title3)
@@ -51,7 +50,7 @@ struct BreathExerciseSettingsView: View {
 
                     Slider(
                         value: $inBreathDuration,
-                        in: minValue ... maxValue,
+                        in: minValueBreath ... maxValue,
                         step: step
                     )
 
@@ -61,7 +60,7 @@ struct BreathExerciseSettingsView: View {
 
                     Slider(
                         value: $fullBreathHoldDuration,
-                        in: minValue ... maxValue,
+                        in: minValueHold ... maxValue,
                         step: step
                     )
                 }
@@ -74,7 +73,7 @@ struct BreathExerciseSettingsView: View {
 
                     Slider(
                         value: $outBreathDuration,
-                        in: minValue ... maxValue,
+                        in: minValueBreath ... maxValue,
                         step: step
                     )
 
@@ -84,7 +83,7 @@ struct BreathExerciseSettingsView: View {
 
                     Slider(
                         value: $emptyHoldDuration,
-                        in: minValue ... maxValue,
+                        in: minValueHold ... maxValue,
                         step: step
                     )
                 }
@@ -107,6 +106,7 @@ struct BreathExerciseSettingsView: View {
             }
             .padding(.bottom, 50) // Adds space at the bottom for scrolling when the keyboard is present
         }
+        .background(Color(UIColor.secondarySystemBackground))
         .ignoresSafeArea(.keyboard) // Prevents content from being pushed up by the keyboard
 
         Button(action: {
@@ -115,11 +115,8 @@ struct BreathExerciseSettingsView: View {
         }) {
             Text("Save")
                 .font(.headline)
-                .padding()
-                .frame(maxWidth: .infinity)
                 .cornerRadius(10)
         }
-        .padding()
     }
 
     func saveExercise() {

@@ -132,6 +132,7 @@ struct BreathExerciseView: View {
 
     func checkTimeAndTriggerFunction(time: Double) {
         if time >= breathExercise.exerciseDuration {
+            UIApplication.shared.isIdleTimerDisabled = false
             playChime()
             isActive = false
         }
@@ -180,8 +181,10 @@ struct BreathExerciseView: View {
                     }
                 Text("/")
                 TimerView(timeElapsed: .constant(breathExercise.exerciseDuration), isActive: .constant(false))
-            }
-        }.toolbar {
+            }.padding(.bottom, 16)
+        }
+        .background(Color(UIColor.secondarySystemBackground))
+        .toolbar {
             ToolbarItem(placement: .navigationBarTrailing) {
                 Button(action: {
                     if audioEnabled {
