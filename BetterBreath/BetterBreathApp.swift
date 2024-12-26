@@ -24,6 +24,15 @@ struct BetterBreathApp: App {
                 BreathExercise(
                     createdAt: Date.now,
                     inBreathDuration: 4,
+                    fullBreathHoldDuration: 7,
+                    outBreathDuration: 8,
+                    emptyHoldDuration: 0,
+                    exerciseDuration: 190,
+                    name: "4-7-8 Relaxation"
+                ),
+                BreathExercise(
+                    createdAt: Date.now,
+                    inBreathDuration: 4,
                     fullBreathHoldDuration: 4,
                     outBreathDuration: 4,
                     emptyHoldDuration: 4,
@@ -37,7 +46,7 @@ struct BetterBreathApp: App {
                     outBreathDuration: 6,
                     emptyHoldDuration: 0,
                     exerciseDuration: 180,
-                    name: "HRV"
+                    name: "Heart Rate Variability boost"
                 ),
             ]
 

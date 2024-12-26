@@ -10,6 +10,7 @@ final class BreathExercise {
     var outBreathDuration: Double
     var emptyHoldDuration: Double
     // Total duration. How long exercise lasts in total
+    // TODO: Maybe better to save # of breath cycles?
     var exerciseDuration: Double
     var name: String
 
