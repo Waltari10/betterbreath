@@ -57,7 +57,10 @@ struct BreathExerciseView: View {
             scale = 1.0
         }
 
-        DispatchQueue.main.asyncAfter(deadline: .now() + breathExercise.inBreathDuration + breathExercise.fullBreathHoldDuration) {
+        DispatchQueue.main.asyncAfter(
+            deadline: .now() + breathExercise.inBreathDuration + breathExercise.fullBreathHoldDuration,
+            qos: .userInteractive
+        ) {
             withAnimation(.easeInOut(duration: breathExercise.outBreathDuration)) {
                 scale = 0.0
                 playOutBreath(duration: breathExercise.outBreathDuration)
@@ -65,7 +68,10 @@ struct BreathExerciseView: View {
             }
         }
 
-        DispatchQueue.main.asyncAfter(deadline: .now() + breathExercise.inBreathDuration + breathExercise.fullBreathHoldDuration + breathExercise.outBreathDuration + breathExercise.emptyHoldDuration) {
+        DispatchQueue.main.asyncAfter(
+            deadline: .now() + breathExercise.inBreathDuration + breathExercise.fullBreathHoldDuration + breathExercise.outBreathDuration + breathExercise.emptyHoldDuration,
+            qos: .userInteractive
+        ) {
             animateCircle()
         }
     }
