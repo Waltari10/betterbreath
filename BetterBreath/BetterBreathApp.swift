@@ -6,6 +6,7 @@ struct BetterBreathApp: App {
     var sharedModelContainer: ModelContainer = {
         let schema = Schema([
             User.self,
+            BreathExerciseTemplate.self,
             BreathExercise.self,
         ])
         let modelConfiguration = ModelConfiguration(schema: schema, isStoredInMemoryOnly: false)
@@ -13,7 +14,7 @@ struct BetterBreathApp: App {
         do {
             let container = try ModelContainer(for: schema, configurations: [modelConfiguration])
 
-            var itemFetchDescriptor = FetchDescriptor<BreathExercise>()
+            var itemFetchDescriptor = FetchDescriptor<BreathExerciseTemplate>()
             itemFetchDescriptor.fetchLimit = 1
 
             guard try container.mainContext.fetch(itemFetchDescriptor).count == 0 else {
@@ -21,7 +22,7 @@ struct BetterBreathApp: App {
             }
 
             let items = [
-                BreathExercise(
+                BreathExerciseTemplate(
                     createdAt: Date.now,
                     inBreathDuration: 4,
                     fullBreathHoldDuration: 7,
@@ -30,7 +31,7 @@ struct BetterBreathApp: App {
                     exerciseDuration: 190,
                     name: "4-7-8 Relaxation"
                 ),
-                BreathExercise(
+                BreathExerciseTemplate(
                     createdAt: Date.now,
                     inBreathDuration: 4,
                     fullBreathHoldDuration: 4,
@@ -39,7 +40,7 @@ struct BetterBreathApp: App {
                     exerciseDuration: 176,
                     name: "Box"
                 ),
-                BreathExercise(
+                BreathExerciseTemplate(
                     createdAt: Date.now,
                     inBreathDuration: 6,
                     fullBreathHoldDuration: 0,

@@ -6,7 +6,7 @@ struct BreathExerciseListView: View {
 
     @State private var editMode: EditMode = .inactive
 
-    @Query private var breathExercises: [BreathExercise]
+    @Query private var breathExerciseTemplates: [BreathExerciseTemplate]
 
     @Query private var users: [User]
     var user: User? { users.first }
@@ -21,17 +21,17 @@ struct BreathExerciseListView: View {
     var body: some View {
         NavigationStack {
             List {
-                if breathExercises.isEmpty {
+                if breathExerciseTemplates.isEmpty {
                     Text("Add your first breath exercise from the top right plus button")
                         .foregroundColor(.gray)
                         .italic()
                 } else {
-                    ForEach(breathExercises) { breathExercise in
-                        NavigationLink(destination: BreathExerciseView(breathExercise: breathExercise)) {
+                    ForEach(breathExerciseTemplates) { template in
+                        NavigationLink(destination: BreathExerciseView(breathExerciseTemplate: template)) {
                             VStack(alignment: .leading) {
-                                Text("\(breathExercise.name.description)")
-                                Text("Duration: \(formatSeconds(seconds: breathExercise.exerciseDuration))")
-                                Text("Pattern: \(String(format: "%.1f", breathExercise.inBreathDuration)) - \(String(format: "%.1f", breathExercise.fullBreathHoldDuration)) - \(String(format: "%.1f", breathExercise.outBreathDuration)) - \(String(format: "%.1f", breathExercise.emptyHoldDuration))")
+                                Text("\(template.name.description)")
+                                Text("Duration: \(formatSeconds(seconds: template.exerciseDuration))")
+                                Text("Pattern: \(String(format: "%.1f", template.inBreathDuration)) - \(String(format: "%.1f", template.fullBreathHoldDuration)) - \(String(format: "%.1f", template.outBreathDuration)) - \(String(format: "%.1f", template.emptyHoldDuration))")
                             }
                         }
                         .frame(maxWidth: .infinity)
@@ -74,7 +74,7 @@ struct BreathExerciseListView: View {
     private func deleteItems(offsets: IndexSet) {
         withAnimation {
             for index in offsets {
-                modelContext.delete(breathExercises[index])
+                modelContext.delete(breathExerciseTemplates[index])
             }
         }
     }
@@ -82,5 +82,5 @@ struct BreathExerciseListView: View {
 
 #Preview {
     BreathExerciseListView()
-        .modelContainer(for: BreathExercise.self, inMemory: true)
+        .modelContainer(for: BreathExerciseTemplate.self, inMemory: true)
 }

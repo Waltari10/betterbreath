@@ -104,10 +104,10 @@ struct BreathExerciseSettingsView: View {
 
                 Spacer()
             }
-            .padding(.bottom, 50) // Adds space at the bottom for scrolling when the keyboard is present
+            .padding(.bottom, 50)
         }
         .background(Color(UIColor.secondarySystemBackground))
-        .ignoresSafeArea(.keyboard) // Prevents content from being pushed up by the keyboard
+        .ignoresSafeArea(.keyboard)
 
         Button(action: {
             saveExercise()
@@ -121,7 +121,7 @@ struct BreathExerciseSettingsView: View {
 
     func saveExercise() {
         withAnimation {
-            let newItem = BreathExercise(
+            let newItem = BreathExerciseTemplate(
                 createdAt: Date(),
                 inBreathDuration: inBreathDuration,
                 fullBreathHoldDuration: fullBreathHoldDuration,

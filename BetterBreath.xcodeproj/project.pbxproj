@@ -7,17 +7,18 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		2F7010EA2D24209A00D8756C /* BreathExercise.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F7010E92D24209A00D8756C /* BreathExercise.swift */; };
+		2F7010EC2D24258600D8756C /* chime.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 2F7010EB2D24258600D8756C /* chime.mp3 */; };
 		2FACBDA82CB29A5C00C91105 /* in_breath.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 2FACBDA72CB29A5C00C91105 /* in_breath.mp3 */; };
 		6077911B2C931C3000D01F24 /* math.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6077911A2C931C3000D01F24 /* math.swift */; };
 		6077911F2C94487A00D01F24 /* CardStyleModifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6077911E2C94487A00D01F24 /* CardStyleModifier.swift */; };
 		60975EC22C8C3A12000F5699 /* out_breath.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 60975EC02C8C3A12000F5699 /* out_breath.mp3 */; };
 		60975EC42C8C47CC000F5699 /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = 60975EC32C8C47CC000F5699 /* User.swift */; };
 		60EC2CE12C52BCF7007EE00E /* BreathExerciseSettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 60EC2CE02C52BCF7007EE00E /* BreathExerciseSettingsView.swift */; };
-		60EF16AC2C551BB700E7D0AF /* BreathExercise.swift in Sources */ = {isa = PBXBuildFile; fileRef = 60EF16AB2C551BB700E7D0AF /* BreathExercise.swift */; };
+		60EF16AC2C551BB700E7D0AF /* BreathExerciseTemplate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 60EF16AB2C551BB700E7D0AF /* BreathExerciseTemplate.swift */; };
 		60EF16E72C552B3600E7D0AF /* BreathExerciseListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 60EF16E62C552B3600E7D0AF /* BreathExerciseListView.swift */; };
 		60EF16E92C552BD400E7D0AF /* BreathExerciseView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 60EF16E82C552BD400E7D0AF /* BreathExerciseView.swift */; };
 		60EF16F02C556B5600E7D0AF /* Timer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 60EF16EF2C556B5600E7D0AF /* Timer.swift */; };
-		60EF16F32C556E1900E7D0AF /* chime.wav in Resources */ = {isa = PBXBuildFile; fileRef = 60EF16F22C556E1900E7D0AF /* chime.wav */; };
 		60EF16F82C56A99200E7D0AF /* time.swift in Sources */ = {isa = PBXBuildFile; fileRef = 60EF16F72C56A99200E7D0AF /* time.swift */; };
 		60FC62D42C52B67100550D32 /* BetterBreathApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 60FC62D32C52B67100550D32 /* BetterBreathApp.swift */; };
 		60FC62DA2C52B67200550D32 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 60FC62D92C52B67200550D32 /* Assets.xcassets */; };
@@ -45,18 +46,19 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		2F7010E92D24209A00D8756C /* BreathExercise.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BreathExercise.swift; sourceTree = "<group>"; };
+		2F7010EB2D24258600D8756C /* chime.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = chime.mp3; sourceTree = "<group>"; };
 		2FACBDA72CB29A5C00C91105 /* in_breath.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = in_breath.mp3; sourceTree = "<group>"; };
 		6077911A2C931C3000D01F24 /* math.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = math.swift; sourceTree = "<group>"; };
 		6077911E2C94487A00D01F24 /* CardStyleModifier.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CardStyleModifier.swift; sourceTree = "<group>"; };
 		60975EC02C8C3A12000F5699 /* out_breath.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = out_breath.mp3; sourceTree = "<group>"; };
 		60975EC32C8C47CC000F5699 /* User.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
 		60EC2CE02C52BCF7007EE00E /* BreathExerciseSettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BreathExerciseSettingsView.swift; sourceTree = "<group>"; };
-		60EF16AB2C551BB700E7D0AF /* BreathExercise.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BreathExercise.swift; sourceTree = "<group>"; };
+		60EF16AB2C551BB700E7D0AF /* BreathExerciseTemplate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BreathExerciseTemplate.swift; sourceTree = "<group>"; };
 		60EF16E62C552B3600E7D0AF /* BreathExerciseListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BreathExerciseListView.swift; sourceTree = "<group>"; };
 		60EF16E82C552BD400E7D0AF /* BreathExerciseView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BreathExerciseView.swift; sourceTree = "<group>"; };
 		60EF16ED2C55666400E7D0AF /* README.markdown */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = README.markdown; sourceTree = "<group>"; };
 		60EF16EF2C556B5600E7D0AF /* Timer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Timer.swift; sourceTree = "<group>"; };
-		60EF16F22C556E1900E7D0AF /* chime.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = chime.wav; sourceTree = "<group>"; };
 		60EF16F72C56A99200E7D0AF /* time.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = time.swift; sourceTree = "<group>"; };
 		60FC62D02C52B67100550D32 /* BetterBreath.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = BetterBreath.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		60FC62D32C52B67100550D32 /* BetterBreathApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BetterBreathApp.swift; sourceTree = "<group>"; };
@@ -98,7 +100,8 @@
 		60EF16EB2C55645B00E7D0AF /* models */ = {
 			isa = PBXGroup;
 			children = (
-				60EF16AB2C551BB700E7D0AF /* BreathExercise.swift */,
+				60EF16AB2C551BB700E7D0AF /* BreathExerciseTemplate.swift */,
+				2F7010E92D24209A00D8756C /* BreathExercise.swift */,
 				60975EC32C8C47CC000F5699 /* User.swift */,
 			);
 			path = models;
@@ -128,7 +131,7 @@
 			children = (
 				2FACBDA72CB29A5C00C91105 /* in_breath.mp3 */,
 				60975EC02C8C3A12000F5699 /* out_breath.mp3 */,
-				60EF16F22C556E1900E7D0AF /* chime.wav */,
+				2F7010EB2D24258600D8756C /* chime.mp3 */,
 			);
 			path = assets;
 			sourceTree = "<group>";
@@ -309,9 +312,9 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				60EF16F32C556E1900E7D0AF /* chime.wav in Resources */,
 				2FACBDA82CB29A5C00C91105 /* in_breath.mp3 in Resources */,
 				60FC62DE2C52B67200550D32 /* Preview Assets.xcassets in Resources */,
+				2F7010EC2D24258600D8756C /* chime.mp3 in Resources */,
 				60FC62DA2C52B67200550D32 /* Assets.xcassets in Resources */,
 				60975EC22C8C3A12000F5699 /* out_breath.mp3 in Resources */,
 			);
@@ -367,8 +370,9 @@
 				60975EC42C8C47CC000F5699 /* User.swift in Sources */,
 				60EF16E72C552B3600E7D0AF /* BreathExerciseListView.swift in Sources */,
 				60FC62D42C52B67100550D32 /* BetterBreathApp.swift in Sources */,
-				60EF16AC2C551BB700E7D0AF /* BreathExercise.swift in Sources */,
+				60EF16AC2C551BB700E7D0AF /* BreathExerciseTemplate.swift in Sources */,
 				6077911F2C94487A00D01F24 /* CardStyleModifier.swift in Sources */,
+				2F7010EA2D24209A00D8756C /* BreathExercise.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -30,7 +30,7 @@ struct BreathExerciseView: View {
         audioEnabled = user?.breathSoundEnabled ?? true
     }
 
-    var breathExercise: BreathExercise
+    var breathExerciseTemplate: BreathExerciseTemplate
 
     @State private var scale: CGFloat = 0.0 // Start small
 
@@ -51,25 +51,25 @@ struct BreathExerciseView: View {
     private func animateCircle() {
         if !isActive { return }
 
-        withAnimation(.easeInOut(duration: breathExercise.inBreathDuration)) {
-            queuVibrations(totalDuration: breathExercise.inBreathDuration)
-            playInBreath(duration: breathExercise.inBreathDuration)
+        withAnimation(.easeInOut(duration: breathExerciseTemplate.inBreathDuration)) {
+            queuVibrations(totalDuration: breathExerciseTemplate.inBreathDuration)
+            playInBreath(duration: breathExerciseTemplate.inBreathDuration)
             scale = 1.0
         }
 
         DispatchQueue.main.asyncAfter(
-            deadline: .now() + breathExercise.inBreathDuration + breathExercise.fullBreathHoldDuration,
+            deadline: .now() + breathExerciseTemplate.inBreathDuration + breathExerciseTemplate.fullBreathHoldDuration,
             qos: .userInteractive
         ) {
-            withAnimation(.easeInOut(duration: breathExercise.outBreathDuration)) {
+            withAnimation(.easeInOut(duration: breathExerciseTemplate.outBreathDuration)) {
                 scale = 0.0
-                playOutBreath(duration: breathExercise.outBreathDuration)
-                queuVibrations(totalDuration: breathExercise.outBreathDuration)
+                playOutBreath(duration: breathExerciseTemplate.outBreathDuration)
+                queuVibrations(totalDuration: breathExerciseTemplate.outBreathDuration)
             }
         }
 
         DispatchQueue.main.asyncAfter(
-            deadline: .now() + breathExercise.inBreathDuration + breathExercise.fullBreathHoldDuration + breathExercise.outBreathDuration + breathExercise.emptyHoldDuration,
+            deadline: .now() + breathExerciseTemplate.inBreathDuration + breathExerciseTemplate.fullBreathHoldDuration + breathExerciseTemplate.outBreathDuration + breathExerciseTemplate.emptyHoldDuration,
             qos: .userInteractive
         ) {
             animateCircle()
@@ -133,11 +133,11 @@ struct BreathExerciseView: View {
     func playChime() {
         if !isActive { return }
 
-        playAudio(resource: "chime", ext: "wav")
+        playAudio(resource: "chime", ext: "mp3")
     }
 
     func checkTimeAndTriggerFunction(time: Double) {
-        if time >= breathExercise.exerciseDuration {
+        if time >= breathExerciseTemplate.exerciseDuration {
             UIApplication.shared.isIdleTimerDisabled = false
             playChime()
             isActive = false
@@ -152,7 +152,7 @@ struct BreathExerciseView: View {
 
     var body: some View {
         NavigationStack {
-            Text("Pattern \(String(format: "%.1f", breathExercise.inBreathDuration)) - \(String(format: "%.1f", breathExercise.fullBreathHoldDuration)) - \(String(format: "%.1f", breathExercise.outBreathDuration)) - \(String(format: "%.1f", breathExercise.emptyHoldDuration))")
+            Text("Pattern \(String(format: "%.1f", breathExerciseTemplate.inBreathDuration)) - \(String(format: "%.1f", breathExerciseTemplate.fullBreathHoldDuration)) - \(String(format: "%.1f", breathExerciseTemplate.outBreathDuration)) - \(String(format: "%.1f", breathExerciseTemplate.emptyHoldDuration))")
                 .onDisappear {
                     onViewUnmount()
                 }
@@ -186,7 +186,7 @@ struct BreathExerciseView: View {
                         checkTimeAndTriggerFunction(time: newValue)
                     }
                 Text("/")
-                TimerView(timeElapsed: .constant(breathExercise.exerciseDuration), isActive: .constant(false))
+                TimerView(timeElapsed: .constant(breathExerciseTemplate.exerciseDuration), isActive: .constant(false))
             }.padding(.bottom, 16)
         }
         .background(Color(UIColor.secondarySystemBackground))
@@ -220,7 +220,7 @@ struct BreathExerciseView: View {
 }
 
 #Preview {
-    BreathExerciseView(breathExercise: BreathExercise(
+    BreathExerciseView(breathExerciseTemplate: BreathExerciseTemplate(
         createdAt: Date(),
         inBreathDuration: 5.0,
         fullBreathHoldDuration: 0.0,
@@ -229,5 +229,5 @@ struct BreathExerciseView: View {
         exerciseDuration: 60.0,
         name: "Breath exercise"
     ))
-    .modelContainer(for: BreathExercise.self, inMemory: true)
+    .modelContainer(for: BreathExerciseTemplate.self, inMemory: true)
 }
