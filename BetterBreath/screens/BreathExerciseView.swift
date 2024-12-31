@@ -186,16 +186,21 @@ struct BreathExerciseView: View {
                                height: min(geometry.size.width * 0.75, 300))
                         .onAppear {}
 
-                    if exercisesStatus == .not_started || exercisesStatus == .finished {
+                    if exercisesStatus == .not_started {
                         Button(action: {
                             exercisesStatus = .inBreath
                             loopExerciseCycle()
                         }) {
-                            Text(
-                                exercisesStatus == .not_started ? "Start" : "Finished")
+                            Text("Start")
                                 .font(.headline)
                                 .cornerRadius(10)
                         }
+                    }
+
+                    if exercisesStatus == .finished {
+                        Text("Finished")
+                            .font(.headline)
+                            .cornerRadius(10)
                     }
                 }
                 .frame(maxWidth: .infinity, maxHeight: .infinity)
