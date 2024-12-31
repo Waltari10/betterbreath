@@ -17,11 +17,11 @@ struct BreathExerciseSettingsView: View {
     @Environment(\.modelContext) private var modelContext
     @Environment(\.dismiss) var dismiss
 
+    @State private var exerciseCycles: Double = 10.0 // could be int, but double for simplicity
     @State private var inBreathDuration: Double = 5.0
     @State private var fullBreathHoldDuration: Double = 0.0
     @State private var outBreathDuration: Double = 5.0
     @State private var emptyHoldDuration: Double = 0.0
-    @State private var exerciseDuration: Double = 180.0
     @State private var pickerTitle: String = ""
     @State private var selectedPickerType: PickerType? = nil
     @State private var exerciseName: String = ""
@@ -44,7 +44,7 @@ struct BreathExerciseSettingsView: View {
                     .modifier(CardStyleModifier())
 
                 VStack(alignment: .leading) {
-                    Text("In breath \(String(format: "%.1f", $inBreathDuration.wrappedValue)) s").font(.title3)
+                    Text("In breath: \(String(format: "%.1f", $inBreathDuration.wrappedValue)) s").font(.title3)
                         .padding(.top, 4)
                         .padding(.bottom, 8)
 
@@ -54,7 +54,7 @@ struct BreathExerciseSettingsView: View {
                         step: step
                     )
 
-                    Text("Hold \(String(format: "%.1f", $fullBreathHoldDuration.wrappedValue)) s").font(.title3)
+                    Text("Hold: \(String(format: "%.1f", $fullBreathHoldDuration.wrappedValue)) s").font(.title3)
                         .padding(.top, 4)
                         .padding(.bottom, 8)
 
@@ -67,7 +67,7 @@ struct BreathExerciseSettingsView: View {
                 .modifier(CardStyleModifier())
 
                 VStack(alignment: .leading) {
-                    Text("Out breath \(String(format: "%.1f", $outBreathDuration.wrappedValue)) s").font(.title3)
+                    Text("Out breath: \(String(format: "%.1f", $outBreathDuration.wrappedValue)) s").font(.title3)
                         .padding(.top, 4)
                         .padding(.bottom, 8)
 
@@ -77,7 +77,7 @@ struct BreathExerciseSettingsView: View {
                         step: step
                     )
 
-                    Text("Hold \(String(format: "%.1f", $emptyHoldDuration.wrappedValue)) s").font(.title3)
+                    Text("Hold: \(String(format: "%.1f", $emptyHoldDuration.wrappedValue)) s").font(.title3)
                         .padding(.top, 4)
                         .padding(.bottom, 8)
 
@@ -90,14 +90,18 @@ struct BreathExerciseSettingsView: View {
                 .modifier(CardStyleModifier())
 
                 VStack(alignment: .leading) {
-                    Text("Duration \(timeFormatted($exerciseDuration.wrappedValue))").font(.title3)
+                    Text("Cycles: \(String(format: "%.0f", $exerciseCycles.wrappedValue))").font(.title3)
+                        .padding(.top, 4)
+                        .padding(.bottom, 4)
+
+                    Text("Duration: \(formatSeconds(seconds: exerciseCycles * (inBreathDuration + fullBreathHoldDuration + outBreathDuration + emptyHoldDuration)))").font(.title3)
                         .padding(.top, 4)
                         .padding(.bottom, 8)
 
                     Slider(
-                        value: $exerciseDuration,
-                        in: 60 ... 60 * 60,
-                        step: 5
+                        value: $exerciseCycles,
+                        in: 1 ... 500,
+                        step: 1
                     )
                 }
                 .modifier(CardStyleModifier())
@@ -127,7 +131,7 @@ struct BreathExerciseSettingsView: View {
                 fullBreathHoldDuration: fullBreathHoldDuration,
                 outBreathDuration: outBreathDuration,
                 emptyHoldDuration: emptyHoldDuration,
-                exerciseDuration: exerciseDuration,
+                exerciseDuration: Double(exerciseCycles) * (inBreathDuration + fullBreathHoldDuration + outBreathDuration + emptyHoldDuration),
                 name: exerciseName == "" ? "Breath exercise" : exerciseName
             )
             modelContext.insert(newItem)

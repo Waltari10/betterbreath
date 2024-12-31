@@ -182,7 +182,7 @@ struct BreathExerciseView: View {
                     Circle()
                         .fill(Color.blue)
                         .scaleEffect(scale)
-                        .frame(width: min(geometry.size.width * 0.75, 300), // Smaller size
+                        .frame(width: min(geometry.size.width * 0.75, 300),
                                height: min(geometry.size.width * 0.75, 300))
                         .onAppear {}
 

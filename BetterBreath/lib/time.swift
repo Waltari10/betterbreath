@@ -1,10 +1,3 @@
-//
-//  time.swift
-//  BetterBreath
-//
-//  Created by Valtteri Laine on 28.7.2024.
-//
-
 import Foundation
 
 func formatSeconds(seconds: Double) -> String {
