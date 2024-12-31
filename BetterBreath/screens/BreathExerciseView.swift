@@ -1,10 +1,3 @@
-//
-//  BreathExerciseView.swift
-//  BetterBreath
-//
-//  Created by Valtteri Laine on 27.7.2024.
-//
-
 import AVFoundation
 import SwiftData
 import SwiftUI
@@ -19,7 +12,6 @@ enum ExerciseStatus {
 struct BreathExerciseView: View {
     @State private var exercisesStatus = ExerciseStatus.not_started
     @State private var audioPlayer: AVAudioPlayer?
-    @State private var isActive = true
     @State private var timeElapsed = 0.0
     @State private var vibrate = false
     @Environment(\.modelContext) private var modelContext
@@ -40,7 +32,7 @@ struct BreathExerciseView: View {
 
     var breathExerciseTemplate: BreathExerciseTemplate
 
-    @State private var scale: CGFloat = 0.0 // Start small
+    @State private var scale: CGFloat = 0.0
 
     private func queuVibrations(totalDuration: Double) {
         if !vibrate { return }
@@ -56,9 +48,8 @@ struct BreathExerciseView: View {
         }
     }
 
-    // Rename to loop since does many things
     private func loopExerciseCycle() {
-        if !isActive { return }
+        if exercisesStatus != .playing { return }
 
         withAnimation(.easeInOut(duration: breathExerciseTemplate.inBreathDuration)) {
             queuVibrations(totalDuration: breathExerciseTemplate.inBreathDuration)
@@ -132,19 +123,19 @@ struct BreathExerciseView: View {
     func playInBreath(
         duration: Double
     ) {
-        if !isActive { return }
+        if exercisesStatus != .playing { return }
         playAudio(resource: "in_breath", ext: "mp3", targetDuration: duration)
     }
 
     func playOutBreath(
         duration: Double
     ) {
-        if !isActive { return }
+        if exercisesStatus != .playing { return }
         playAudio(resource: "out_breath", ext: "mp3", targetDuration: duration)
     }
 
     func playChime() {
-        if !isActive { return }
+        if exercisesStatus != .playing { return }
 
         playAudio(resource: "chime", ext: "mp3")
     }
@@ -156,11 +147,11 @@ struct BreathExerciseView: View {
     func finishExercise() {
         UIApplication.shared.isIdleTimerDisabled = false
         playChime()
-        isActive = false
+        exercisesStatus = .finished
     }
 
     func onViewUnmount() {
-        isActive = false
+        exercisesStatus = .finished
         audioPlayer?.stop()
         UIApplication.shared.isIdleTimerDisabled = false
     }
@@ -173,7 +164,6 @@ struct BreathExerciseView: View {
                 }
 
             GeometryReader { geometry in
-                // Using ZStack to overlay circles
                 ZStack {
                     // Outer circle
                     Circle()
@@ -187,16 +177,25 @@ struct BreathExerciseView: View {
                         .scaleEffect(scale)
                         .frame(width: min(geometry.size.width * 0.75, 300), // Smaller size
                                height: min(geometry.size.width * 0.75, 300))
-                        .onAppear {
+                        .onAppear {}
+
+                    if exercisesStatus == .not_started {
+                        Button(action: {
+                            exercisesStatus = .playing
                             loopExerciseCycle()
+                        }) {
+                            Text("Start")
+                                .font(.headline)
+                                .cornerRadius(10)
                         }
+                    }
                 }
                 .frame(maxWidth: .infinity, maxHeight: .infinity)
             }
             .edgesIgnoringSafeArea(.all)
 
             HStack {
-                TimerView(timeElapsed: $timeElapsed, isActive: $isActive)
+                TimerView(timeElapsed: $timeElapsed, isActive: .constant(exercisesStatus != .not_started))
                 Text("/")
                 TimerView(timeElapsed: .constant(breathExerciseTemplate.exerciseDuration), isActive: .constant(false))
             }.padding(.bottom, 16)

@@ -6,7 +6,7 @@ struct TimerView: View {
 
     let timer = Timer.publish(every: 0.1, on: .main, in: .common).autoconnect()
 
-    @State private var startedAt: Date = .init()
+    @State private var startedAt: Date? = nil
 
     var body: some View {
         Text(
@@ -14,11 +14,14 @@ struct TimerView: View {
         )
         .font(.title)
         .onReceive(timer) { _ in
-            if !isActive {
-                return
+            if isActive {
+                if startedAt == nil {
+                    startedAt = Date.now // Set startedAt when isActive turns true for the first time
+                }
+                if let startedAt = startedAt {
+                    timeElapsed = startedAt.distance(to: Date.now)
+                }
             }
-
-            timeElapsed = startedAt.distance(to: Date.now)
         }
         .onDisappear {
             timer.upstream.connect().cancel()
