@@ -9,7 +9,15 @@ import AVFoundation
 import SwiftData
 import SwiftUI
 
+enum ExerciseStatus {
+    case not_started
+    case playing
+    case paused
+    case finished
+}
+
 struct BreathExerciseView: View {
+    @State private var exercisesStatus = ExerciseStatus.not_started
     @State private var audioPlayer: AVAudioPlayer?
     @State private var isActive = true
     @State private var timeElapsed = 0.0
@@ -48,7 +56,8 @@ struct BreathExerciseView: View {
         }
     }
 
-    private func animateCircle() {
+    // Rename to loop since does many things
+    private func loopExerciseCycle() {
         if !isActive { return }
 
         withAnimation(.easeInOut(duration: breathExerciseTemplate.inBreathDuration)) {
@@ -72,7 +81,11 @@ struct BreathExerciseView: View {
             deadline: .now() + breathExerciseTemplate.inBreathDuration + breathExerciseTemplate.fullBreathHoldDuration + breathExerciseTemplate.outBreathDuration + breathExerciseTemplate.emptyHoldDuration,
             qos: .userInteractive
         ) {
-            animateCircle()
+            if isExerciseFinished(time: timeElapsed) {
+                finishExercise()
+            } else {
+                loopExerciseCycle()
+            }
         }
     }
 
@@ -136,12 +149,14 @@ struct BreathExerciseView: View {
         playAudio(resource: "chime", ext: "mp3")
     }
 
-    func checkTimeAndTriggerFunction(time: Double) {
-        if time >= breathExerciseTemplate.exerciseDuration {
-            UIApplication.shared.isIdleTimerDisabled = false
-            playChime()
-            isActive = false
-        }
+    func isExerciseFinished(time: Double) -> Bool {
+        return time >= breathExerciseTemplate.exerciseDuration
+    }
+
+    func finishExercise() {
+        UIApplication.shared.isIdleTimerDisabled = false
+        playChime()
+        isActive = false
     }
 
     func onViewUnmount() {
@@ -173,7 +188,7 @@ struct BreathExerciseView: View {
                         .frame(width: min(geometry.size.width * 0.75, 300), // Smaller size
                                height: min(geometry.size.width * 0.75, 300))
                         .onAppear {
-                            animateCircle()
+                            loopExerciseCycle()
                         }
                 }
                 .frame(maxWidth: .infinity, maxHeight: .infinity)
@@ -182,9 +197,6 @@ struct BreathExerciseView: View {
 
             HStack {
                 TimerView(timeElapsed: $timeElapsed, isActive: $isActive)
-                    .onChange(of: timeElapsed) { newValue in
-                        checkTimeAndTriggerFunction(time: newValue)
-                    }
                 Text("/")
                 TimerView(timeElapsed: .constant(breathExerciseTemplate.exerciseDuration), isActive: .constant(false))
             }.padding(.bottom, 16)
