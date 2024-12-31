@@ -2,7 +2,7 @@ import AVFoundation
 import SwiftData
 import SwiftUI
 
-enum ExerciseStatus {
+private enum ExerciseStatus {
     case not_started
     case playing
     case paused
@@ -195,7 +195,10 @@ struct BreathExerciseView: View {
             .edgesIgnoringSafeArea(.all)
 
             HStack {
-                TimerView(timeElapsed: $timeElapsed, isActive: .constant(exercisesStatus != .not_started))
+                TimerView(
+                    timeElapsed: $timeElapsed,
+                    isActive: .constant(exercisesStatus == .playing)
+                )
                 Text("/")
                 TimerView(timeElapsed: .constant(breathExerciseTemplate.exerciseDuration), isActive: .constant(false))
             }.padding(.bottom, 16)
