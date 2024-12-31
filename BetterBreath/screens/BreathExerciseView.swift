@@ -4,9 +4,16 @@ import SwiftUI
 
 private enum ExerciseStatus {
     case not_started
-    case playing
+    case inBreath
+    case inHold
+    case outBreath
+    case outHold
     case paused
     case finished
+
+    var isPlaying: Bool {
+        self == .inBreath || self == .inHold || self == .outBreath || self == .outHold
+    }
 }
 
 struct BreathExerciseView: View {
@@ -49,7 +56,7 @@ struct BreathExerciseView: View {
     }
 
     private func loopExerciseCycle() {
-        if exercisesStatus != .playing { return }
+        if !exercisesStatus.isPlaying { return }
 
         withAnimation(.easeInOut(duration: breathExerciseTemplate.inBreathDuration)) {
             queuVibrations(totalDuration: breathExerciseTemplate.inBreathDuration)
@@ -123,19 +130,19 @@ struct BreathExerciseView: View {
     func playInBreath(
         duration: Double
     ) {
-        if exercisesStatus != .playing { return }
+        if !exercisesStatus.isPlaying { return }
         playAudio(resource: "in_breath", ext: "mp3", targetDuration: duration)
     }
 
     func playOutBreath(
         duration: Double
     ) {
-        if exercisesStatus != .playing { return }
+        if !exercisesStatus.isPlaying { return }
         playAudio(resource: "out_breath", ext: "mp3", targetDuration: duration)
     }
 
     func playChime() {
-        if exercisesStatus != .playing { return }
+        if !exercisesStatus.isPlaying { return }
 
         playAudio(resource: "chime", ext: "mp3")
     }
@@ -179,12 +186,13 @@ struct BreathExerciseView: View {
                                height: min(geometry.size.width * 0.75, 300))
                         .onAppear {}
 
-                    if exercisesStatus == .not_started {
+                    if exercisesStatus == .not_started || exercisesStatus == .finished {
                         Button(action: {
-                            exercisesStatus = .playing
+                            exercisesStatus = .inBreath
                             loopExerciseCycle()
                         }) {
-                            Text("Start")
+                            Text(
+                                exercisesStatus == .not_started ? "Start" : "Finished")
                                 .font(.headline)
                                 .cornerRadius(10)
                         }
@@ -197,7 +205,7 @@ struct BreathExerciseView: View {
             HStack {
                 TimerView(
                     timeElapsed: $timeElapsed,
-                    isActive: .constant(exercisesStatus == .playing)
+                    isActive: .constant(exercisesStatus.isPlaying)
                 )
                 Text("/")
                 TimerView(timeElapsed: .constant(breathExerciseTemplate.exerciseDuration), isActive: .constant(false))
