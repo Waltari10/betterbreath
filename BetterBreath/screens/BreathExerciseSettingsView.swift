@@ -59,94 +59,103 @@ struct BreathExerciseSettingsView: View {
     }
 
     var body: some View {
-        ScrollView {
-            VStack {
-                TextField("Exercise name...", text: $exerciseName)
+        ZStack {
+            ScrollView {
+                VStack {
+                    TextField("Exercise name...", text: $exerciseName)
+                        .modifier(CardStyleModifier())
+
+                    VStack(alignment: .leading) {
+                        Text("In breath: \(String(format: "%.1f", $inBreathDuration.wrappedValue)) s").font(.title3)
+                            .padding(.top, 4)
+                            .padding(.bottom, 8)
+
+                        Slider(
+                            value: $inBreathDuration,
+                            in: minValueBreath ... maxValue,
+                            step: step
+                        )
+
+                        Text("Hold: \(String(format: "%.1f", $fullBreathHoldDuration.wrappedValue)) s").font(.title3)
+                            .padding(.top, 4)
+                            .padding(.bottom, 8)
+
+                        Slider(
+                            value: $fullBreathHoldDuration,
+                            in: minValueHold ... maxValue,
+                            step: step
+                        )
+                    }
                     .modifier(CardStyleModifier())
 
-                VStack(alignment: .leading) {
-                    Text("In breath: \(String(format: "%.1f", $inBreathDuration.wrappedValue)) s").font(.title3)
-                        .padding(.top, 4)
-                        .padding(.bottom, 8)
+                    VStack(alignment: .leading) {
+                        Text("Out breath: \(String(format: "%.1f", $outBreathDuration.wrappedValue)) s").font(.title3)
+                            .padding(.top, 4)
+                            .padding(.bottom, 8)
 
-                    Slider(
-                        value: $inBreathDuration,
-                        in: minValueBreath ... maxValue,
-                        step: step
-                    )
+                        Slider(
+                            value: $outBreathDuration,
+                            in: minValueBreath ... maxValue,
+                            step: step
+                        )
 
-                    Text("Hold: \(String(format: "%.1f", $fullBreathHoldDuration.wrappedValue)) s").font(.title3)
-                        .padding(.top, 4)
-                        .padding(.bottom, 8)
+                        Text("Hold: \(String(format: "%.1f", $emptyHoldDuration.wrappedValue)) s").font(.title3)
+                            .padding(.top, 4)
+                            .padding(.bottom, 8)
 
-                    Slider(
-                        value: $fullBreathHoldDuration,
-                        in: minValueHold ... maxValue,
-                        step: step
-                    )
+                        Slider(
+                            value: $emptyHoldDuration,
+                            in: minValueHold ... maxValue,
+                            step: step
+                        )
+                    }
+                    .modifier(CardStyleModifier())
+
+                    VStack(alignment: .leading) {
+                        Text("Cycles: \(String(format: "%.0f", $exerciseCycles.wrappedValue))").font(.title3)
+                            .padding(.top, 4)
+                            .padding(.bottom, 4)
+
+                        Text("Duration: \(formatSeconds(seconds: exerciseCycles * (inBreathDuration + fullBreathHoldDuration + outBreathDuration + emptyHoldDuration)))").font(.title3)
+                            .padding(.top, 4)
+                            .padding(.bottom, 8)
+
+                        Slider(
+                            value: $exerciseCycles,
+                            in: 1 ... 500,
+                            step: 1
+                        )
+                    }
+                    .modifier(CardStyleModifier())
+
+                    Spacer()
                 }
-                .modifier(CardStyleModifier())
-
-                VStack(alignment: .leading) {
-                    Text("Out breath: \(String(format: "%.1f", $outBreathDuration.wrappedValue)) s").font(.title3)
-                        .padding(.top, 4)
-                        .padding(.bottom, 8)
-
-                    Slider(
-                        value: $outBreathDuration,
-                        in: minValueBreath ... maxValue,
-                        step: step
-                    )
-
-                    Text("Hold: \(String(format: "%.1f", $emptyHoldDuration.wrappedValue)) s").font(.title3)
-                        .padding(.top, 4)
-                        .padding(.bottom, 8)
-
-                    Slider(
-                        value: $emptyHoldDuration,
-                        in: minValueHold ... maxValue,
-                        step: step
-                    )
+                .padding(.bottom, 100)
+            }
+            .background(Color(UIColor.secondarySystemBackground))
+            .ignoresSafeArea(.keyboard)
+            .toolbar {
+                ToolbarItem(placement: .principal) {
+                    Text(breathExerciseTemplate != nil ? "Edit Exercise" : "Create Exercise")
+                        .font(.headline)
                 }
-                .modifier(CardStyleModifier())
+            }
 
-                VStack(alignment: .leading) {
-                    Text("Cycles: \(String(format: "%.0f", $exerciseCycles.wrappedValue))").font(.title3)
-                        .padding(.top, 4)
-                        .padding(.bottom, 4)
-
-                    Text("Duration: \(formatSeconds(seconds: exerciseCycles * (inBreathDuration + fullBreathHoldDuration + outBreathDuration + emptyHoldDuration)))").font(.title3)
-                        .padding(.top, 4)
-                        .padding(.bottom, 8)
-
-                    Slider(
-                        value: $exerciseCycles,
-                        in: 1 ... 500,
-                        step: 1
-                    )
-                }
-                .modifier(CardStyleModifier())
-
+            VStack {
                 Spacer()
+                Button(action: {
+                    saveExercise()
+                    dismiss()
+                }) {
+                    Text("Save")
+                        .font(.headline)
+                        .padding(.horizontal, 40)
+                        .padding(.vertical, 12)
+                        .foregroundColor(.white)
+                        .background(Color.blue)
+                        .cornerRadius(10)
+                }
             }
-            .padding(.bottom, 50)
-        }
-        .background(Color(UIColor.secondarySystemBackground))
-        .ignoresSafeArea(.keyboard)
-        .toolbar {
-            ToolbarItem(placement: .principal) {
-                Text(breathExerciseTemplate != nil ? "Edit Exercise" : "Create Exercise")
-                    .font(.headline)
-            }
-        }
-
-        Button(action: {
-            saveExercise()
-            dismiss()
-        }) {
-            Text(breathExerciseTemplate != nil ? "Update" : "Save")
-                .font(.headline)
-                .cornerRadius(10)
         }
     }
 
