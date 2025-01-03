@@ -133,6 +133,12 @@ struct BreathExerciseSettingsView: View {
         }
         .background(Color(UIColor.secondarySystemBackground))
         .ignoresSafeArea(.keyboard)
+        .toolbar {
+            ToolbarItem(placement: .principal) {
+                Text(breathExerciseTemplate != nil ? "Edit Exercise" : "Create Exercise")
+                    .font(.headline)
+            }
+        }
 
         Button(action: {
             saveExercise()
