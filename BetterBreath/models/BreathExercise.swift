@@ -2,7 +2,6 @@ import Foundation
 import SwiftData
 
 // Instance of a started and also maybe completed breath exercise.
-// TODO: Should be created based on template whenever breath exercise is started.
 
 @Model
 final class BreathExercise {
@@ -20,7 +19,7 @@ final class BreathExercise {
     init(
         createdAt: Date,
         startedAt: Date,
-        completedAt: Date,
+        completedAt: Date? = nil,
         endedAt: Date? = nil,
         inBreathDuration: Double,
         fullBreathHoldDuration: Double,

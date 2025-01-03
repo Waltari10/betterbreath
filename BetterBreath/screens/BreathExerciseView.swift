@@ -17,7 +17,7 @@ private enum ExerciseStatus {
 }
 
 struct BreathExerciseView: View {
-    @State private var exercisesStatus = ExerciseStatus.not_started
+    @State private var exerciseStatus = ExerciseStatus.not_started
     @State private var audioPlayer: AVAudioPlayer?
     @State private var timeElapsed = 0.0
     @State private var vibrate = false
@@ -41,6 +41,8 @@ struct BreathExerciseView: View {
 
     @State private var scale: CGFloat = 0.0
 
+    @State private var breathExercise: BreathExercise? = nil
+
     private func queuVibrations(totalDuration: Double) {
         if !vibrate { return }
 
@@ -56,7 +58,7 @@ struct BreathExerciseView: View {
     }
 
     private func loopExerciseCycle() {
-        if !exercisesStatus.isPlaying { return }
+        if !exerciseStatus.isPlaying { return }
 
         withAnimation(.easeInOut(duration: breathExerciseTemplate.inBreathDuration)) {
             queuVibrations(totalDuration: breathExerciseTemplate.inBreathDuration)
@@ -130,19 +132,19 @@ struct BreathExerciseView: View {
     func playInBreath(
         duration: Double
     ) {
-        if !exercisesStatus.isPlaying { return }
+        if !exerciseStatus.isPlaying { return }
         playAudio(resource: "in_breath", ext: "mp3", targetDuration: duration)
     }
 
     func playOutBreath(
         duration: Double
     ) {
-        if !exercisesStatus.isPlaying { return }
+        if !exerciseStatus.isPlaying { return }
         playAudio(resource: "out_breath", ext: "mp3", targetDuration: duration)
     }
 
     func playChime() {
-        if !exercisesStatus.isPlaying { return }
+        if !exerciseStatus.isPlaying { return }
 
         playAudio(resource: "chime", ext: "mp3")
     }
@@ -154,13 +156,44 @@ struct BreathExerciseView: View {
     func finishExercise() {
         UIApplication.shared.isIdleTimerDisabled = false
         playChime()
-        exercisesStatus = .finished
+        exerciseStatus = .finished
+
+        // breathExercise always exists since we create it on start exercise
+        if let breathExercise {
+            do {
+                try modelContext.transaction {
+                    modelContext.delete(breathExercise)
+                    breathExercise.completedAt = Date()
+                    breathExercise.endedAt = Date()
+                    modelContext.insert(breathExercise)
+                }
+            } catch {
+                print("Failed to save exercise on finish \(error)")
+            }
+        }
     }
 
     func onViewUnmount() {
-        exercisesStatus = .finished
+        exerciseStatus = .finished
         audioPlayer?.stop()
         UIApplication.shared.isIdleTimerDisabled = false
+        
+        
+        if self.exerciseStatus == .finished || exerciseStatus == .not_started {
+            return
+        }
+        
+        if let breathExercise {
+            do {
+                try modelContext.transaction {
+                    modelContext.delete(breathExercise)
+                    breathExercise.endedAt = Date()
+                    modelContext.insert(breathExercise)
+                }
+            } catch {
+                print("Failed to save exercise on unmount \(error)")
+            }
+        }
     }
 
     var body: some View {
@@ -186,10 +219,26 @@ struct BreathExerciseView: View {
                                height: min(geometry.size.width * 0.75, 300))
                         .onAppear {}
 
-                    if exercisesStatus == .not_started {
+                    if exerciseStatus == .not_started {
                         Button(action: {
-                            exercisesStatus = .inBreath
+                            exerciseStatus = .inBreath
                             loopExerciseCycle()
+
+                            breathExercise = BreathExercise(
+                                createdAt: Date(),
+                                startedAt: Date(),
+                                completedAt: nil,
+                                inBreathDuration: breathExerciseTemplate.inBreathDuration,
+                                fullBreathHoldDuration: breathExerciseTemplate.fullBreathHoldDuration,
+                                outBreathDuration: breathExerciseTemplate.outBreathDuration,
+                                emptyHoldDuration: breathExerciseTemplate.emptyHoldDuration,
+                                exerciseDuration: breathExerciseTemplate.exerciseDuration,
+                                name: breathExerciseTemplate.name
+                            )
+
+                            if let breathExercise {
+                                modelContext.insert(breathExercise)
+                            }
                         }) {
                             Text("Start")
                                 .font(.headline)
@@ -197,7 +246,7 @@ struct BreathExerciseView: View {
                         }
                     }
 
-                    if exercisesStatus == .finished {
+                    if exerciseStatus == .finished {
                         Text("Finished")
                             .font(.headline)
                             .cornerRadius(10)
@@ -210,7 +259,7 @@ struct BreathExerciseView: View {
             HStack {
                 TimerView(
                     timeElapsed: $timeElapsed,
-                    isActive: .constant(exercisesStatus.isPlaying)
+                    isActive: .constant(exerciseStatus.isPlaying)
                 )
                 Text("/")
                 TimerView(timeElapsed: .constant(breathExerciseTemplate.exerciseDuration), isActive: .constant(false))
@@ -244,17 +293,4 @@ struct BreathExerciseView: View {
         }
         .onAppear(perform: onViewApper)
     }
-}
-
-#Preview {
-    BreathExerciseView(breathExerciseTemplate: BreathExerciseTemplate(
-        createdAt: Date(),
-        inBreathDuration: 5.0,
-        fullBreathHoldDuration: 0.0,
-        outBreathDuration: 0.0,
-        emptyHoldDuration: 5.0,
-        exerciseDuration: 60.0,
-        name: "Breath exercise"
-    ))
-    .modelContainer(for: BreathExerciseTemplate.self, inMemory: true)
 }
