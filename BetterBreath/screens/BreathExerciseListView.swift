@@ -18,6 +18,12 @@ struct BreathExerciseListView: View {
         }
     }
 
+    @State private var navigateToExercise = false
+    @State private var navigateToEdit = false
+
+    @State private var selectedExercise: BreathExerciseTemplate?
+    @State private var editingExercise: BreathExerciseTemplate?
+
     var body: some View {
         NavigationStack {
             List {
@@ -27,11 +33,33 @@ struct BreathExerciseListView: View {
                         .italic()
                 } else {
                     ForEach(breathExerciseTemplates) { template in
-                        NavigationLink(destination: BreathExerciseView(breathExerciseTemplate: template)) {
+                        VStack {
+                            NavigationLink(
+                                destination: BreathExerciseView(breathExerciseTemplate: template),
+                                tag: template,
+                                selection: $selectedExercise
+                            ) {
+                                EmptyView()
+                            }.hidden()
+
+                            NavigationLink(
+                                destination: BreathExerciseSettingsView(),
+                                tag: template,
+                                selection: $editingExercise
+                            ) {
+                                EmptyView()
+                            }.hidden()
+
                             VStack(alignment: .leading) {
                                 Text("\(template.name.description)")
                                 Text("Duration: \(formatSeconds(seconds: template.exerciseDuration))")
                                 Text("Pattern: \(String(format: "%.1f", template.inBreathDuration)) - \(String(format: "%.1f", template.fullBreathHoldDuration)) - \(String(format: "%.1f", template.outBreathDuration)) - \(String(format: "%.1f", template.emptyHoldDuration))")
+                            }
+                            .onTapGesture {
+                                selectedExercise = template
+                            }
+                            .onLongPressGesture {
+                                editingExercise = template
                             }
                         }
                         .frame(maxWidth: .infinity)
