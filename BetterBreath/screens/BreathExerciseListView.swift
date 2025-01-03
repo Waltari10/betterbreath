@@ -1,6 +1,56 @@
 import SwiftData
 import SwiftUI
 
+struct ListItemCell: View {
+    let template: BreathExerciseTemplate
+    @Binding var selectedExercise: BreathExerciseTemplate?
+    @Binding var editingExercise: BreathExerciseTemplate?
+    @State private var isPressed: Bool = false
+
+    var body: some View {
+        ZStack(alignment: .leading) {
+            NavigationLink(
+                destination: BreathExerciseView(breathExerciseTemplate: template),
+                tag: template,
+                selection: $selectedExercise
+            ) {
+                EmptyView()
+            }.hidden()
+
+            NavigationLink(
+                destination: BreathExerciseSettingsView(breathExerciseTemplate: template),
+                tag: template,
+                selection: $editingExercise
+            ) {
+                EmptyView()
+            }.hidden()
+
+            VStack(alignment: .leading) {
+                Text("\(template.name.description)")
+                Text("Duration: \(formatSeconds(seconds: template.exerciseDuration))")
+                Text("Pattern: \(String(format: "%.1f", template.inBreathDuration)) - \(String(format: "%.1f", template.fullBreathHoldDuration)) - \(String(format: "%.1f", template.outBreathDuration)) - \(String(format: "%.1f", template.emptyHoldDuration))")
+                    .frame(maxWidth: .infinity, alignment: .leading)
+            }
+            .padding(16)
+            .background(isPressed ? Color(UIColor.darkGray)
+                : Color(UIColor.secondarySystemBackground)
+            )
+            .frame(maxWidth: .infinity, alignment: .leading)
+        }
+        .listRowInsets(.init(top: 0, leading: 0, bottom: 0, trailing: 0))
+        .animation(.easeInOut, value: isPressed)
+        .onTapGesture {
+            selectedExercise = template
+        }
+        .onLongPressGesture {
+            isPressed = false
+            editingExercise = template
+        } onPressingChanged: { isPressing in
+            isPressed = isPressing
+        }
+    }
+}
+
 struct BreathExerciseListView: View {
     @Environment(\.modelContext) private var modelContext
 
@@ -33,35 +83,11 @@ struct BreathExerciseListView: View {
                         .italic()
                 } else {
                     ForEach(breathExerciseTemplates) { template in
-                        ZStack(alignment: .leading) {
-                            NavigationLink(
-                                destination: BreathExerciseView(breathExerciseTemplate: template),
-                                tag: template,
-                                selection: $selectedExercise
-                            ) {
-                                EmptyView()
-                            }.hidden()
-
-                            NavigationLink(
-                                destination: BreathExerciseSettingsView(breathExerciseTemplate: template),
-                                tag: template,
-                                selection: $editingExercise
-                            ) {
-                                EmptyView()
-                            }.hidden()
-
-                            VStack(alignment: .leading) {
-                                Text("\(template.name.description)")
-                                Text("Duration: \(formatSeconds(seconds: template.exerciseDuration))")
-                                Text("Pattern: \(String(format: "%.1f", template.inBreathDuration)) - \(String(format: "%.1f", template.fullBreathHoldDuration)) - \(String(format: "%.1f", template.outBreathDuration)) - \(String(format: "%.1f", template.emptyHoldDuration))")
-                            }
-                            .onTapGesture {
-                                selectedExercise = template
-                            }
-                            .onLongPressGesture {
-                                editingExercise = template
-                            }
-                        }
+                        ListItemCell(
+                            template: template,
+                            selectedExercise: $selectedExercise,
+                            editingExercise: $editingExercise
+                        )
                     }
                     .onDelete(perform: deleteItems)
                 }

@@ -33,7 +33,6 @@ struct BreathExerciseSettingsView: View {
     private let maxValue: Double = 60.0
     private let step: Double = 0.5
 
-    // TODO: Set title "editing" or "Create" new based on if template was given as an argument
     init(breathExerciseTemplate: BreathExerciseTemplate? = nil) {
         if let breathExerciseTemplate {
             self.breathExerciseTemplate = breathExerciseTemplate
@@ -132,7 +131,7 @@ struct BreathExerciseSettingsView: View {
                 }
                 .padding(.bottom, 100)
             }
-            .background(Color(UIColor.secondarySystemBackground))
+            .background(Color.black)
             .ignoresSafeArea(.keyboard)
             .toolbar {
                 ToolbarItem(placement: .principal) {
