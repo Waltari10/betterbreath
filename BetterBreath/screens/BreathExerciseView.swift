@@ -177,12 +177,11 @@ struct BreathExerciseView: View {
         exerciseStatus = .finished
         audioPlayer?.stop()
         UIApplication.shared.isIdleTimerDisabled = false
-        
-        
-        if self.exerciseStatus == .finished || exerciseStatus == .not_started {
+
+        if exerciseStatus == .finished || exerciseStatus == .not_started {
             return
         }
-        
+
         if let breathExercise {
             do {
                 try modelContext.transaction {
