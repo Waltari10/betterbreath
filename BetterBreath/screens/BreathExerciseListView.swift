@@ -33,7 +33,7 @@ struct BreathExerciseListView: View {
                         .italic()
                 } else {
                     ForEach(breathExerciseTemplates) { template in
-                        VStack {
+                        ZStack(alignment: .leading) {
                             NavigationLink(
                                 destination: BreathExerciseView(breathExerciseTemplate: template),
                                 tag: template,
@@ -43,7 +43,7 @@ struct BreathExerciseListView: View {
                             }.hidden()
 
                             NavigationLink(
-                                destination: BreathExerciseSettingsView(),
+                                destination: BreathExerciseSettingsView(breathExerciseTemplate: template),
                                 tag: template,
                                 selection: $editingExercise
                             ) {
@@ -62,7 +62,6 @@ struct BreathExerciseListView: View {
                                 editingExercise = template
                             }
                         }
-                        .frame(maxWidth: .infinity)
                     }
                     .onDelete(perform: deleteItems)
                 }

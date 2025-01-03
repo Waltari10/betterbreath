@@ -17,6 +17,8 @@ struct BreathExerciseSettingsView: View {
     @Environment(\.modelContext) private var modelContext
     @Environment(\.dismiss) var dismiss
 
+    var breathExerciseTemplate: BreathExerciseTemplate?
+
     @State private var exerciseCycles: Double = 10.0 // could be int, but double for simplicity
     @State private var inBreathDuration: Double = 5.0
     @State private var fullBreathHoldDuration: Double = 0.0
@@ -30,6 +32,25 @@ struct BreathExerciseSettingsView: View {
     private let minValueHold: Double = 0.0
     private let maxValue: Double = 60.0
     private let step: Double = 0.5
+
+    // TODO: Set title "editing" or "Create" new based on if template was given as an argument
+    init(breathExerciseTemplate: BreathExerciseTemplate? = nil) {
+        if let breathExerciseTemplate {
+            self.breathExerciseTemplate = breathExerciseTemplate
+
+            _inBreathDuration = State(initialValue: breathExerciseTemplate.inBreathDuration)
+            _fullBreathHoldDuration = State(initialValue: breathExerciseTemplate.fullBreathHoldDuration)
+            _outBreathDuration = State(initialValue: breathExerciseTemplate.outBreathDuration)
+            _emptyHoldDuration = State(initialValue: breathExerciseTemplate.emptyHoldDuration)
+            _exerciseName = State(initialValue: breathExerciseTemplate.name)
+
+            let cycleDuration = _inBreathDuration.wrappedValue + _fullBreathHoldDuration.wrappedValue + _outBreathDuration.wrappedValue + _emptyHoldDuration.wrappedValue
+
+            let exerciseCycles = breathExerciseTemplate.exerciseDuration / cycleDuration
+
+            _exerciseCycles = State(initialValue: exerciseCycles)
+        }
+    }
 
     func timeFormatted(_ totalSeconds: Double) -> String {
         let seconds = Int(totalSeconds) % 60
@@ -117,7 +138,7 @@ struct BreathExerciseSettingsView: View {
             saveExercise()
             dismiss()
         }) {
-            Text("Save")
+            Text(breathExerciseTemplate != nil ? "Update" : "Save")
                 .font(.headline)
                 .cornerRadius(10)
         }
@@ -125,6 +146,11 @@ struct BreathExerciseSettingsView: View {
 
     func saveExercise() {
         withAnimation {
+            // Delete old and create new if editing
+            if let breathExerciseTemplate {
+                modelContext.delete(breathExerciseTemplate)
+            }
+
             let newItem = BreathExerciseTemplate(
                 createdAt: Date(),
                 inBreathDuration: inBreathDuration,
